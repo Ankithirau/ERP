@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Fee Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dff3ff;
+            padding: 20px;
+        }
+
+        .receipt {
+            width: 700px;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #ccc;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .header img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+
+        .header-content {
+            flex-grow: 1;
+        }
+
+        .header-content h1 {
+            color: orange;
+            margin: 5px 0;
+        }
+
+        .header-content p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .info div {
+            width: 48%;
+            font-size: 16px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: orange;
+            color: white;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        
+
+        .stamp {
+            margin-top: 40px;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .signature {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="receipt">
+        <div class="header">
+            <img src="https://16.171.242.61/sdrecord/img/springdalelogo.png" alt="School Logo">
+            <div class="header-content">
+                <h1>Sunny's SPRING DALE SCHOOL</h1>
+                <p>(CBSE) Affiliation No. 1130268</p>
+                <p>Krishna Nagari, Khat Road, Bhandara - 441904</p>
+                <h3>STUDENT FEES RECEIPT</h3>
+            </div>
+        </div>
+
+        <div class="info">
+            <div><strong>Rec. No:</strong> 2024-25/002454</div>
+            <div><strong>Date:</strong> 16-10-2024</div>
+            <div><strong>Name:</strong> Vansh Jagdish Moharkar</div>
+            <div><strong>Id:</strong> 004669</div>
+            <div><strong>Class:</strong> 9</div>
+            <div><strong>Section:</strong> C</div>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>Sr. No.</th>
+                <th>Fee Name</th>
+                <th>Amount</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Admission Fees</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Co-curricular Activities</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Curricular Activities</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Exam Fees</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Lab Fees</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Term Fees</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Tuition Fees</td>
+                <td>10000</td>
+            </tr>
+        </table>
+
+        <div class="total">
+            <span>Total Fees Paid:</span>  
+            <span style="margin-left: auto;">₹ ***10000***</span>
+        </div>
+        <div class="total" style="text-align: left;">
+            <span>Ten Thousand Only</span>
+        </div>
+        
+        
+
+        <div class="stamp">Sunny's Spring Dale School, Bhandara<br>AG. No. 1130268</div>
+        <div class="signature">Signature</div>
+    </div>
+</body>
+
+</html>
