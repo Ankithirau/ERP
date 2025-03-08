@@ -13,6 +13,8 @@ class MarkController extends Controller
         ->select('marks.*', 'students.name as student_name')
         ->paginate(10);
 
+
+
        return view("mark.index", compact('marks'));
     }
 }
