@@ -13,6 +13,9 @@ class Student extends Model
 
      protected $guarded = [];
 
+     protected $primaryKey = 'student_id';
+
+
      public function marks()
     {
         return $this->hasMany(Marks::class, 'student_id', 'student_id');

@@ -40,7 +40,7 @@
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="{{ route("mark") }}">Marks</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Co-Scholastic Areas</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route("co-scholastic") }}">Co-Scholastic Areas</a></li>
         </ul>
       </div>
     </li>
@@ -64,7 +64,7 @@
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Add Users </a></li>
+          <li class="nav-item"> <a class="nav-link" href={{ route('adduser') }}> Add Users </a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> User's Change Password </a></li>
         </ul>
       </div>

@@ -26,12 +26,18 @@
 
             <div class="card shadow-lg">
                 <div class="card-body">
-                    
+                @if(session('success'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
                     <!-- Breadcrumb -->
                     <div class="d-flex mb-4">
                         <i class="mdi mdi-home text-muted hover-cursor"></i>
-                        <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Results&nbsp;/&nbsp;</p>
-                        <p class="text-primary mb-0 hover-cursor">List</p>
+                        <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;<a href="{{ route('create-result') }}" class="text-muted hover-cursor">Result&nbsp;/&nbsp;</p></a>
+                        <p class="text-primary mb-0 hover-cursor">Add</p>
                     </div>
 
                     <h4 class="card-title text-primary">📊 Student Results</h4>
@@ -53,7 +59,7 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody> 
+                            <tbody>
                                 @php $s_no = 1; @endphp
                                 @foreach($result as $results)
                                 <tr>
@@ -68,13 +74,13 @@
                                     <td class="text-success"><strong>{{ $results->term2_percentage }}%</strong></td>
                                     <td class="fw-bold">{{ $results->term2_grade }}</td>
                                     <td class="text-nowrap">
-                                        <a href="edit-url" title="Edit" class="text-primary me-2 text-decoration-none">
+                                        <a href="{{ route('edit-result',$results->result_id ) }}" title="Edit" class="text-primary me-2 text-decoration-none">
                                             <i class="mdi mdi-pencil fs-5"></i>
                                         </a>
-                                        <a href="view-url" title="View" class="text-success me-2 text-decoration-none">
+                                        <a href="{{ route('view-result',$results->result_id ) }}" title="View" class="text-success me-2 text-decoration-none">
                                             <i class="mdi mdi-eye fs-5"></i>
                                         </a>
-                                        <a href="delete-url" title="Delete" class="text-danger text-decoration-none">
+                                        <a href="{{ route('delete-result',$results->result_id) }}" title="Delete" class="text-danger text-decoration-none">
                                             <i class="mdi mdi-trash-can fs-5"></i>
                                         </a>
                                     </td>

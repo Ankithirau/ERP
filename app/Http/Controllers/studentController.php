@@ -4,12 +4,94 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Support\Facades\Validator;
 
 class studentController extends Controller
 {
 
-    public function index(){
+    public function student(){
         $student = Student::paginate(10);
         return view("student.index" ,compact("student"));
     }
+
+    public function create(){
+        $student = Student::paginate(10);
+        return view("student.create");
+    }
+
+    public function store(Request $request)
+{
+    // Validate input fields
+    $request->validate([
+       // 'student_id' => 'required|unique:students,student_id',
+        'admission_no' => 'required|unique:students,admission_no',
+        'name' => 'required|string|max:255',
+        'mother_name' => 'required|string|max:255',
+        'dob' => 'required|date',
+        'section' => 'required|string|max:100',
+        'admission_year' => 'required|integer|min:2000|max:' . date('Y'),
+    ]);
+
+    // Insert student data
+    Student::create([
+       // 'student_id' => $request->student_id,
+        'admission_no' => $request->admission_no,
+        'name' => $request->name,
+        'mother_name' => $request->mother_name,
+        'dob' => $request->dob,
+        'section' => $request->section,
+        'admission_year' => $request->admission_year,
+    ]);
+
+    // Redirect with success message
+    return redirect()->back()->with('success', 'Student Result Added Successfully!');
+   //return redirect()->route('student')->with('success', 'Student added successfully.');
+}
+
+public function edit($id)
+{
+    // Fetch student data by ID
+    $student = Student::findOrFail($id);
+
+    return view('student.edit', compact('student'));
+}
+
+public function update(Request $request, $student_id)
+{
+    // Validate input fields
+    $request->validate([
+        'student_id' => 'required|unique:students,student_id,' . $student_id . ',student_id',
+        'admission_no' => 'required|unique:students,admission_no,' . $student_id . ',student_id',
+        'name' => 'required|string|max:255',
+        'mother_name' => 'required|string|max:255',
+        'dob' => 'required|date',
+        'section' => 'required|string|max:100',
+        'admission_year' => 'required|integer|min:2000|max:' . date('Y'),
+    ]);
+
+    // Find student using student_id and update
+    $student = Student::where('student_id', $student_id)->firstOrFail();
+    $student->update($request->all());
+
+    return redirect()->route('student')->with('success', 'Student details updated successfully.');
+}
+
+public function show($id)
+{
+    // Fetch student data by ID
+    $student = Student::findOrFail($id);
+
+    return view('student.show', compact('student'));
+}
+
+public function destroy($id)
+{
+    // return "ree";
+    $user = Student::findOrFail($id);
+    $user->delete();
+
+    return redirect()->back()->with('success', 'Student record Deleted Successfully!');
+
+}
+
 }

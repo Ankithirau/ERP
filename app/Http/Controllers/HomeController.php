@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Marks;
+use App\Models\Result;
 
 class HomeController extends Controller
 {
@@ -27,9 +31,17 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-
-        return view('dashboard');
+        $usercount = User::count();
+        $marksheetcount = Marks::count();
+        $resultcount = Result::count();
+        return view('dashboard',compact('usercount','marksheetcount','resultcount'));
     }
+
+    public function logout()
+{
+    Auth::logout();
+    return redirect('/login')->with('success', 'Logged out successfully.');
+}
 
 
 }

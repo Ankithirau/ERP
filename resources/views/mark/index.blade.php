@@ -7,12 +7,12 @@
 
                 <div class="card shadow-lg">
                     <div class="card-body">
-                        
+
                         <!-- Breadcrumb -->
                         <div class="d-flex mb-4">
                             <i class="mdi mdi-home text-muted hover-cursor"></i>
-                            <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Marks&nbsp;/&nbsp;</p>
-                            <p class="text-primary mb-0 hover-cursor">List</p>
+                            <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;<a href="{{ route('addmarks') }}" class="text-muted hover-cursor">Marks&nbsp;/&nbsp;</p></a>
+                            <p class="text-primary mb-0 hover-cursor">Add</p>
                         </div>
 
                         <h4 class="card-title text-primary">📚 Marks List</h4>

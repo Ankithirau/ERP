@@ -12,4 +12,6 @@ class Result extends Model
     protected $table = 'results';
 
     protected $guarded = [];
+
+    protected $primaryKey = 'result_id';
 }
