@@ -2,62 +2,142 @@
 
 @push('style')
 <style>
-    .card-custom {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
+    /* Card Header Styling */
+    .card-header {
+        background-color: #f1f2f3;
+        color: #0f0f0f;
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    /* Breadcrumb Styling */
+    .breadcrumb-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 0;
+    }
+
+    .breadcrumb-container i {
+        font-size: 18px;
+        color: #0f0f0f;
+    }
+
+    .breadcrumb-container p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .breadcrumb-container a {
+        text-decoration: none;
+        color: #151616;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .breadcrumb-container a:hover {
+        color: #007bff;
+    }
+
+    /* Centering Form */
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Form Styling */
+    .form-label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    /* Button Styling */
+    .btn {
+        border-radius: 8px;
+        padding: 8px 20px;
     }
 </style>
 @endpush
 
 @section('panel')
-    <div class="container-fluid"> <!-- Make it full width -->
-        <div class="row justify-content-center">
-            <div class="col-md-6"> <!-- Centered column -->
-                <div class="card card-custom">
-                    <div class="card-body">
-                    <div class="d-flex mb-4">
-                            <i class="mdi mdi-home text-muted hover-cursor"></i>
-                            <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;<a href="{{ route('index') }}" class="text-muted hover-cursor">Users&nbsp;/&nbsp;</p></a>
-                            <p class="text-primary mb-0 hover-cursor">List</p>
-                        </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
 
-                        <!-- <h4 class="card-title text-primary">📚 Student List</h4> -->
+                <!-- ✅ Success & Error Messages -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-                        <h4 class="card-title text-center">Create User</h4>
+                <!-- ✅ Card Header with Breadcrumb -->
+                <div class="card-header">
+                    <div class="breadcrumb-container">
+                        <i class="mdi mdi-home"></i>
+                        <p><a href="{{ route('index') }}">Users</a> / </p>
+                        <p class="text-dark">Add</p>
+                    </div>
+                </div>
+
+                <!-- ✅ Centered Form -->
+                <div class="card-body">
+                    <div class="form-container">
+                        <h4 class="text-center mb-4">Create User</h4>
                         <form action="{{ route('store') }}" method="POST">
                             @csrf
 
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select class="form-control" id="role" name="role" required>
+                                        <option value="">-- Select Role --</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="teacher">Teacher</option>
+                                        <option value="peon">Peon</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                            <!-- ✅ Submit & Cancel Buttons -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Create User</button>
+                                <a href="{{ route('index') }}" class="btn btn-secondary">Cancel</a>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="role" class="form-label">Role</label>
-                                <select class="form-control" id="role" name="role" required>
-                                <option value="">--select---</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="teacher">Teacher</option>
-                                    <option value="peon"></option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100">Create User</button>
                         </form>
-                    </div>
-                </div>
-            </div>
+                    </div> <!-- End of Form Container -->
+                </div> <!-- End of Card Body -->
+            </div> <!-- End of Card -->
         </div>
     </div>
+</div>
 @endsection

@@ -2,58 +2,113 @@
 
 @push('style')
 <style>
-    .card-custom {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
+    /* Card Header Styling */
+    .card-header {
+        background-color: #f1f2f3;
+        color: #0f0f0f;
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    /* Breadcrumb Styling */
+    .breadcrumb-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 0;
+    }
+
+    .breadcrumb-container i {
+        font-size: 18px;
+        color: #0f0f0f;
+    }
+
+    .breadcrumb-container p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .breadcrumb-container a {
+        text-decoration: none;
+        color: #151616;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .breadcrumb-container a:hover {
+        color: #007bff;
+    }
+
+    /* Centering Form */
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Form Styling */
+    .form-label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    /* Button Styling */
+    .btn {
+        border-radius: 8px;
+        padding: 8px 20px;
     }
 </style>
 @endpush
 
 @section('panel')
-    <div class="container-fluid"> <!-- Full width -->
-        <div class="row justify-content-center">
-            <div class="col-md-6"> <!-- Centered column -->
-                <div class="card card-custom">
-                    <div class="card-body">
-                        <div class="d-flex mb-4">
-                            <i class="mdi mdi-home text-muted hover-cursor"></i>
-                            <p class="text-muted mb-0 hover-cursor">
-                                &nbsp;/&nbsp;<a href="{{ route('index') }}" class="text-muted hover-cursor">Users&nbsp;/&nbsp;</a>
-                            </p>
-                            <p class="text-primary mb-0 hover-cursor">list</p>
-                        </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
 
-                        <h4 class="card-title text-center">Edit User</h4>
-
-                        <form action="" method="POST">
-                            @csrf
-                            @method('PUT')
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" readonly />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" readonly />
-                            </div>
-
-                            <!-- <div class="mb-3">
-                                <label for="password" class="form-label">Password (Leave blank to keep current password)</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                            </div> -->
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->role }}" readonly />
-                            </div>
-                            <a href="{{ route('index') }}" class="btn btn-secondary w-100 mt-2">Cancel</a>
-                        </form>
+                <!-- ✅ Card Header with Breadcrumb -->
+                <div class="card-header">
+                    <div class="breadcrumb-container">
+                        <i class="mdi mdi-home"></i>
+                        <p><a href="{{ route('index') }}">Users</a> / </p>
+                        <p class="text-dark">View</p>
                     </div>
                 </div>
-            </div>
+
+                <!-- ✅ Centered Form -->
+                <div class="card-body">
+                    <div class="form-container">
+                        <h4 class="text-center mb-4">User Details</h4>
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" readonly />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" readonly />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="role" class="form-label">Role</label>
+                                    <input type="text" class="form-control" id="role" name="role" value="{{ $user->role }}" readonly />
+                                </div>
+                            </div>
+
+                            <!-- ✅ Cancel Button -->
+                            <div class="text-center">
+                                <a href="{{ route('index') }}" class="btn btn-secondary">Back</a>
+                            </div>
+                        </form>
+                    </div> <!-- End of Form Container -->
+                </div> <!-- End of Card Body -->
+            </div> <!-- End of Card -->
         </div>
     </div>
+</div>
 @endsection

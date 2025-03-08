@@ -64,7 +64,7 @@
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href={{ route('adduser') }}> Add Users </a></li>
+          <li class="nav-item"> <a class="nav-link" href={{ route('index') }}> Users </a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> User's Change Password </a></li>
         </ul>
       </div>

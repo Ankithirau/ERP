@@ -2,65 +2,144 @@
 
 @push('style')
 <style>
-    .card-custom {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
+    /* Card Header Styling */
+    .card-header {
+        background-color: #f1f2f3;
+        color: #0f0f0f;
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    /* Breadcrumb Styling */
+    .breadcrumb-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 0;
+    }
+
+    .breadcrumb-container i {
+        font-size: 18px;
+        color: #0f0f0f;
+    }
+
+    .breadcrumb-container p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .breadcrumb-container a {
+        text-decoration: none;
+        color: #151616;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .breadcrumb-container a:hover {
+        color: #007bff;
+    }
+
+    /* Centering Form */
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Form Styling */
+    .form-label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    /* Button Styling */
+    .btn {
+        border-radius: 8px;
+        padding: 8px 20px;
     }
 </style>
 @endpush
 
 @section('panel')
-    <div class="container-fluid"> <!-- Full width -->
-        <div class="row justify-content-center">
-            <div class="col-md-6"> <!-- Centered column -->
-                <div class="card card-custom">
-                    <div class="card-body">
-                        <div class="d-flex mb-4">
-                            <i class="mdi mdi-home text-muted hover-cursor"></i>
-                            <p class="text-muted mb-0 hover-cursor">
-                                &nbsp;/&nbsp;<a href="{{ route('index') }}" class="text-muted hover-cursor">Users&nbsp;/&nbsp;</a>
-                            </p>
-                            <p class="text-primary mb-0 hover-cursor">list</p>
-                        </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
 
-                        <h4 class="card-title text-center">Edit User</h4>
+                <!-- ✅ Success & Error Messages -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
+                <!-- ✅ Card Header with Breadcrumb -->
+                <div class="card-header">
+                    <div class="breadcrumb-container">
+                        <i class="mdi mdi-home"></i>
+                        <p><a href="{{ route('index') }}">Users</a> / </p>
+                        <p class="text-dark">Edit</p>
+                    </div>
+                </div>
+
+                <!-- ✅ Centered Form -->
+                <div class="card-body">
+                    <div class="form-container">
+                        <h4 class="text-center mb-4">Edit User</h4>
                         <form action="{{ route('update', $user->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password </label>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                    <small>(Leave blank to keep current password)</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select class="form-control" id="role" name="role" required>
+                                        <option value="">-- Select --</option>
+                                        <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="teacher" {{ $user->role == 'teacher' ? 'selected' : '' }}>Teacher</option>
+                                        <option value="peon" {{ $user->role == 'peon' ? 'selected' : '' }}>Peon</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password (Leave blank to keep current password)</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                            <!-- ✅ Submit & Cancel Buttons -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Update User</button>
+                                <a href="{{ route('index') }}" class="btn btn-secondary">Cancel</a>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="role" class="form-label">Role</label>
-                                <select class="form-control" id="role" name="role" required>
-                                    <option value="">-- Select --</option>
-                                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                    <option value="teacher" {{ $user->role == 'teacher' ? 'selected' : '' }}>Teacher</option>
-                                    <option value="peon" {{ $user->role == 'peon' ? 'selected' : '' }}>Peon</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-success w-100">Update User</button>
-                            <a href="{{ route('index') }}" class="btn btn-secondary w-100 mt-2">Cancel</a>
                         </form>
-                    </div>
-                </div>
-            </div>
+                    </div> <!-- End of Form Container -->
+                </div> <!-- End of Card Body -->
+            </div> <!-- End of Card -->
         </div>
     </div>
+</div>
 @endsection
