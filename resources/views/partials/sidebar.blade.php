@@ -70,6 +70,12 @@
       </div>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('receipts.index') }}">
+        <i class="mdi mdi-file-pdf menu-icon"></i>
+        <span class="menu-title">Generate PDF</span>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="pages/icons/mdi.html">
         <i class="mdi mdi-logout-variant menu-icon"></i>
         <span class="menu-title">Logout</span>

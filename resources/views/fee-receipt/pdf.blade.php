@@ -52,12 +52,20 @@
             border: 1px solid #ccc;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
         }
 
         .info div {
-            width: 48%;
+            width: 50%;
             font-size: 16px;
+            padding: 5px 0;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
         }
 
         .table {
@@ -86,7 +94,6 @@
             font-weight: bold;
             margin-top: 20px;
         }
-        
 
         .stamp {
             margin-top: 40px;
@@ -114,13 +121,16 @@
             </div>
         </div>
 
+        <!-- Student Details with Proper Alignment -->
         <div class="info">
-            <div><strong>Rec. No:</strong> 2024-25/002454</div>
-            <div><strong>Date:</strong> 16-10-2024</div>
-            <div><strong>Name:</strong> Vansh Jagdish Moharkar</div>
-            <div><strong>Id:</strong> 004669</div>
-            <div><strong>Class:</strong> 9</div>
-            <div><strong>Section:</strong> C</div>
+            <div class="left"><strong>Rec. No:</strong> {{ $data['receipt_no'] }}</div>
+            <div class="right"><strong>Date:</strong> {{ $data['payment_date'] }}</div>
+
+            <div class="left"><strong>Name:</strong> {{ $data['student_name'] }}</div>
+            <div class="right"><strong>Id:</strong> {{ $data['student_id'] }}</div>
+
+            <div class="left"><strong>Class:</strong> {{ $data['class'] }}</div>
+            <div class="right"><strong>Section:</strong> {{ $data['section'] }}</div>
         </div>
 
         <table class="table">
@@ -129,52 +139,27 @@
                 <th>Fee Name</th>
                 <th>Amount</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Admission Fees</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Co-curricular Activities</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Curricular Activities</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Exam Fees</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Lab Fees</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>Term Fees</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>Tuition Fees</td>
-                <td>10000</td>
-            </tr>
+            @php
+                $feesDetails = is_string($data['fees_details']) ? json_decode($data['fees_details'], true) : $data['fees_details'];
+            @endphp
+
+            @foreach($feesDetails as $index => $fee)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $fee['name'] }}</td>
+                    <td> ₹ {{ number_format($fee['amount'], 2) }}</td>
+                </tr>
+            @endforeach
         </table>
 
         <div class="total">
-            <span>Total Fees Paid:</span>  
-            <span style="margin-left: auto;">₹ ***10000***</span>
+            <span>Total Fees Paid:</span>
+            <span>₹ ***{{ number_format($data['amount'], 2) }}***</span>
         </div>
+
         <div class="total" style="text-align: left;">
-            <span>Ten Thousand Only</span>
+            <span>{{ ucwords((new NumberFormatter('en', NumberFormatter::SPELLOUT))->format($data['amount'])) }} Only</span>
         </div>
-        
-        
 
         <div class="stamp">Sunny's Spring Dale School, Bhandara<br>AG. No. 1130268</div>
         <div class="signature">Signature</div>

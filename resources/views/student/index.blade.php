@@ -134,7 +134,7 @@
                         </div>
 
                         <!-- ✅ Pagination -->
-                        <div class="d-flex justify-content-end mt-3">
+                        <div class="d-flex justify-content-left mt-3">
                             {{ $student->links('pagination::bootstrap-4') }}
                         </div>
 

@@ -52,11 +52,10 @@ Route::get('/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->
 Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update');
 Route::get('/view/{id}', [App\Http\Controllers\UserController::class, 'view'])->name('view');
 Route::get('/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('delete');
-
-
-
-
-
-
-
-
+Route::get('/receipt-create', [App\Http\Controllers\FeesReceiptController::class,'receiptCreate'])->name('fees-receipt.create');
+Route::get('/receipts-list', [App\Http\Controllers\FeesReceiptController::class,'receiptIndex'])->name('receipts.index');
+Route::post('/receipts-store', [App\Http\Controllers\FeesReceiptController::class,'generateReceipt'])->name('receipts.store');
+Route::get('/receipts-edit/{id}', [App\Http\Controllers\FeesReceiptController::class,'receiptEdit'])->name('receipts.edit');
+Route::put('/receipts/{id}', [App\Http\Controllers\FeesReceiptController::class, 'updateReceipt'])->name('receipts.update');
+Route::get('/download-receipt/{id}', [App\Http\Controllers\FeesReceiptController::class, 'downloadReceipt'])->name('download-receipt');
+Route::get('/delete-receipt/{id}', [App\Http\Controllers\FeesReceiptController::class, 'deleteReceipt'])->name('delete-receipt');

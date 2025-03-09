@@ -22,6 +22,14 @@
     <link rel="stylesheet" href="{{ asset('style/style.css')}}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" />
+    <style>
+        .form-control, select, textarea {
+            border: 1px solid #007bff !important; /* Blue Border */
+            border-radius: 8px;
+            padding: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
 
     <!-- Styles -->
     {{--

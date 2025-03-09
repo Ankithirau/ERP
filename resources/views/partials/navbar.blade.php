@@ -13,12 +13,12 @@
     <ul class="navbar-nav mr-lg-4 w-100">
       <li class="nav-item nav-search d-none d-lg-block w-100">
         <div class="input-group">
-          <div class="input-group-prepend">
+          <div class="input-group-prepend d-none">
             <span class="input-group-text" id="search">
               <i class="mdi mdi-magnify"></i>
             </span>
           </div>
-          <input type="text" class="form-control" placeholder="Search now" aria-label="search"
+          <input type="text" class="form-control d-none" placeholder="Search now" aria-label="search"
             aria-describedby="search">
         </div>
       </li>
