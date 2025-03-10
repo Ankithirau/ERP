@@ -7,8 +7,9 @@
             <div class="row w-100 mx-0">
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                        <div class="brand-logo">
-                            <img src="{{asset('images/company.svg')}}" alt="logo">
+                        <div class="brand-logo h3 text-primary">
+                            Sunny's Spring Dale School
+                            {{-- <img src="{{asset('images/company.svg')}}" alt="logo"> --}}
                         </div>
                         <h4>New here?</h4>
                         <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
@@ -60,11 +61,11 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN
+                                <button class="btn btn-sm btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN
                                     UP</button>
                             </div>
                             <div class="text-center mt-4 font-weight-light">
-                                Already have an account? <a href="{{ route('register') }}"
+                                Already have an account? <a href="{{ route('login') }}"
                                     class="text-primary">Login</a>
                             </div>
                         </form>

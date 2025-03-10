@@ -89,7 +89,6 @@
 
                     <!-- ✅ Card Header with List Page Style Breadcrumbs -->
                     <div class="card-header">
-                        
                         <div class="breadcrumb-container">
                             <i class="mdi mdi-home"></i>
                             <p><a href="{{ route('student') }}">Student</a> / </p>

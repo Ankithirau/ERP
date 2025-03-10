@@ -8,8 +8,9 @@
             <div class="row w-100 mx-0">
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                        <div class="brand-logo">
-                            <img src="{{asset('images/company.svg')}}" alt="logo">
+                        <div class="brand-logo h3 text-primary">
+                            Sunny's Spring Dale School
+                            {{-- <img src="{{asset('images/company.svg')}}" alt="logo"> --}}
                         </div>
                         <h4>Hello! let's get started</h4>
                         <h6 class="font-weight-light">Sign in to continue.</h6>
@@ -37,7 +38,7 @@
                                 @enderror
                             </div>
                             <div class="mt-3">
-                                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN
+                                <button class="btn btn-primary btn-sm font-weight-medium auth-form-btn">SIGN
                                     IN</button>
                             </div>
                             <div class="my-2 d-flex justify-content-between align-items-center">
@@ -54,8 +55,8 @@
                                 </a>
                                 @endif
                             </div>
-                            <div class="mb-2">
-                                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                            <div class="mb-2 d-none">
+                                <button type="button" class="btn btn-sm btn-block btn-facebook auth-form-btn">
                                     <i class="mdi mdi-facebook me-2"></i>Connect using facebook
                                 </button>
                             </div>

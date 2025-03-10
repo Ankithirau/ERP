@@ -103,7 +103,7 @@
                                     <tr>
                                         <td>{{ $s_no++ }}</td>
                                         <td>{{ $users->email }}</td>
-                                        <td>{{ $users->role }}</td>
+                                        <td>{{ $users->role??'N/A' }}</td>
                                         <td>{{ $users->name }}</td>
                                         <td>{{ \Carbon\Carbon::parse($users->created_at)->format('d M, Y') }}</td>
                                         <td class="text-center action-icons" style="white-space: nowrap;">

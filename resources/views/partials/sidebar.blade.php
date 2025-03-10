@@ -76,10 +76,13 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pages/icons/mdi.html">
+      <a class="nav-link" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
         <i class="mdi mdi-logout-variant menu-icon"></i>
         <span class="menu-title">Logout</span>
       </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+      </form>
     </li>
     <!-- <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">

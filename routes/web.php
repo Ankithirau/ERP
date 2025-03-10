@@ -1,6 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    HomeController,
+    StudentController,
+    MarkController,
+    ResultController,
+    UserController,
+    FeesReceiptController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -16,47 +24,64 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::post('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
-
 Auth::routes();
+Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/student', [App\Http\Controllers\studentController::class, 'student'])->name('student');
-Route::get('/create-student', [App\Http\Controllers\studentController::class, 'create'])->name('create-student');
-Route::post('/store-student', [App\Http\Controllers\studentController::class, 'store'])->name('store-student');
-Route::get('/edit-student/{id}', [App\Http\Controllers\studentController::class, 'edit'])->name('edit-student');
-Route::put('/update-student/{id}', [App\Http\Controllers\studentController::class, 'update'])->name('update-student');
-Route::get('/view-student/{id}', [App\Http\Controllers\studentController::class, 'show'])->name('view-student');
-Route::get('/delete-student/{id}', [App\Http\Controllers\studentController::class, 'destroy'])->name('delete-student');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/mark', [App\Http\Controllers\MarkController::class, 'index'])->name('mark');
-Route::get('/addmarks', [App\Http\Controllers\MarkController::class, 'create'])->name('addmarks');
-Route::post('/store-marks', [App\Http\Controllers\MarkController::class, 'store'])->name('store-marks');
+    Route::prefix('admin')->group(function () {
 
-Route::get('/co-scholastic', [App\Http\Controllers\MarkController::class, 'coscholastic'])->name('co-scholastic');
+        Route::controller(StudentController::class)->group(function () {
+            Route::get('students', 'student')->name('student');
+            Route::get('students/create', 'create')->name('create-student');
+            Route::post('students/store', 'store')->name('store-student');
+            Route::get('students/edit/{id}', 'edit')->name('edit-student');
+            Route::put('students/update/{id}', 'update')->name('update-student');
+            Route::get('students/view/{id}', 'show')->name('view-student');
+            Route::get('students/delete/{id}', 'destroy')->name('delete-student');
+        });
 
-Route::get('/result', [App\Http\Controllers\resultController::class, 'index'])->name('result');
-Route::get('/create-result', [App\Http\Controllers\resultController::class, 'create'])->name('create-result');
-Route::post('/store-result', [App\Http\Controllers\resultController::class, 'store'])->name('store-result');
-Route::get('/edit-result/{id}', [App\Http\Controllers\resultController::class, 'edit'])->name('edit-result');
-Route::put('/update-result/{id}', [App\Http\Controllers\resultController::class, 'update'])->name('update-result');
-Route::get('/view-result/{id}', [App\Http\Controllers\resultController::class, 'show'])->name('view-result');
-Route::get('/delete-result/{id}', [App\Http\Controllers\resultController::class, 'destroy'])->name('delete-result');
+        Route::controller(MarkController::class)->group(function () {
+            Route::get('marks', 'index')->name('mark');
+            Route::get('marks/add', 'create')->name('addmarks');
+            Route::post('marks/store', 'store')->name('store-marks');
+            Route::get('co-scholastic', 'coscholastic')->name('co-scholastic');
+        });
 
-Route::get('/adduser', [App\Http\Controllers\UserController::class, 'create'])->name('adduser');
-Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('store');
-Route::get('/index', [App\Http\Controllers\UserController::class, 'index'])->name('index');
-Route::get('/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
-Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update');
-Route::get('/view/{id}', [App\Http\Controllers\UserController::class, 'view'])->name('view');
-Route::get('/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('delete');
-Route::get('/receipt-create', [App\Http\Controllers\FeesReceiptController::class,'receiptCreate'])->name('fees-receipt.create');
-Route::get('/receipts-list', [App\Http\Controllers\FeesReceiptController::class,'receiptIndex'])->name('receipts.index');
-Route::post('/receipts-store', [App\Http\Controllers\FeesReceiptController::class,'generateReceipt'])->name('receipts.store');
-Route::get('/receipts-edit/{id}', [App\Http\Controllers\FeesReceiptController::class,'receiptEdit'])->name('receipts.edit');
-Route::put('/receipts/{id}', [App\Http\Controllers\FeesReceiptController::class, 'updateReceipt'])->name('receipts.update');
-Route::get('/download-receipt/{id}', [App\Http\Controllers\FeesReceiptController::class, 'downloadReceipt'])->name('download-receipt');
-Route::get('/delete-receipt/{id}', [App\Http\Controllers\FeesReceiptController::class, 'deleteReceipt'])->name('delete-receipt');
-Route::get('/show-receipt', [App\Http\Controllers\FeesReceiptController::class, 'showReceipt'])->name('show-receipt');
+        Route::controller(ResultController::class)->group(function () {
+            Route::get('results', 'index')->name('result');
+            Route::get('results/create', 'create')->name('create-result');
+            Route::post('results/store', 'store')->name('store-result');
+            Route::get('results/edit/{id}', 'edit')->name('edit-result');
+            Route::put('results/update/{id}', 'update')->name('update-result');
+            Route::get('results/view/{id}', 'show')->name('view-result');
+            Route::get('results/delete/{id}', 'destroy')->name('delete-result');
+        });
+
+        Route::controller(UserController::class)->group(function () {
+            Route::get('users', 'index')->name('index');
+            Route::get('users/add', 'create')->name('adduser');
+            Route::post('users/store', 'store')->name('store');
+            Route::get('users/edit/{id}', 'edit')->name('edit');
+            Route::put('users/update/{id}', 'update')->name('update');
+            Route::get('users/view/{id}', 'view')->name('view');
+            Route::get('users/delete/{id}', 'destroy')->name('delete');
+            Route::get('profile/{id}', 'profile')->name('profile');
+            Route::put('profile/{id}', 'profileUpdate')->name('profileUpdate');
+        });
+
+        Route::controller(FeesReceiptController::class)->group(function () {
+            Route::get('receipts/create', 'receiptCreate')->name('fees-receipt.create');
+            Route::get('receipts', 'receiptIndex')->name('receipts.index');
+            Route::post('receipts/store', 'generateReceipt')->name('receipts.store');
+            Route::get('receipts/edit/{id}', 'receiptEdit')->name('receipts.edit');
+            Route::put('receipts/update/{id}', 'updateReceipt')->name('receipts.update');
+            Route::get('receipts/download/{id}', 'downloadReceipt')->name('download-receipt');
+            Route::get('receipts/delete/{id}', 'deleteReceipt')->name('delete-receipt');
+            Route::get('receipts/show', 'showReceipt')->name('show-receipt');
+        });
+    });
+});
