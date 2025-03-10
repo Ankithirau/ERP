@@ -59,3 +59,4 @@ Route::get('/receipts-edit/{id}', [App\Http\Controllers\FeesReceiptController::c
 Route::put('/receipts/{id}', [App\Http\Controllers\FeesReceiptController::class, 'updateReceipt'])->name('receipts.update');
 Route::get('/download-receipt/{id}', [App\Http\Controllers\FeesReceiptController::class, 'downloadReceipt'])->name('download-receipt');
 Route::get('/delete-receipt/{id}', [App\Http\Controllers\FeesReceiptController::class, 'deleteReceipt'])->name('delete-receipt');
+Route::get('/show-receipt', [App\Http\Controllers\FeesReceiptController::class, 'showReceipt'])->name('show-receipt');

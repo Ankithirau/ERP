@@ -84,7 +84,7 @@
                                             <td>{{ $s_no++ }}</td>
                                             <td>{{ $receipt->receipt_no }}</td>
                                             <td>{{ $receipt->student_name }}</td>
-                                            <td>₹{{ number_format($receipt->amount_paid, 2) }}</td>
+                                            <td>₹{{ number_format($receipt->amount, 2) }}</td>
                                             <td>{{ \Carbon\Carbon::parse($receipt->payment_date)->format('d M, Y') }}</td>
                                             <td>{{ $receipt->payment_mode }}</td>
                                             <td class="text-center action-icons">

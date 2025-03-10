@@ -47,7 +47,7 @@ class FeesReceiptController extends Controller
                 'payment_mode' => $request->payment_mode
             ];
 
-            $pdf = PDF::loadView('fee-receipt.pdf', compact('data'));
+            $pdf = PDF::loadView('fee-receipt.pdf', compact('data'))->setPaper('A4', 'portrait');
             $pdfPath = 'receipts/' . $data['student_id'] . '_receipt.pdf';
             Storage::put('public/' . $pdfPath, $pdf->output());
 
@@ -122,7 +122,7 @@ class FeesReceiptController extends Controller
             ];
 
             // ✅ Existing PDF Update
-            $pdf = PDF::loadView('fee-receipt.pdf', compact('data'));
+            $pdf = PDF::loadView('fee-receipt.pdf', compact('data'))->setPaper('A4', 'portrait');
             $pdfPath = 'receipts/' . $data['student_id'] . '_receipt.pdf';
             Storage::put('public/' . $pdfPath, $pdf->output());
 
@@ -172,4 +172,36 @@ class FeesReceiptController extends Controller
         }
     }
 
+
+    public function showReceipt(Request $request)
+    {
+        $receipt = FeesReceipt::findOrFail(2);
+
+
+        $totalFees = array_sum(array_column($receipt->fees_details, 'amount'));
+
+        $data = [
+            'receipt_no' => '2024-25/' . rand(1000, 9999),
+            'student_name' => $receipt->student_name,
+            'student_id' => $receipt->student_id,
+            'class' => $receipt->class,
+            'section' => $receipt->section,
+            'fees_details' => $receipt->fees, // Array format for easy access
+            'amount' => $totalFees,
+            'payment_date' => $receipt->payment_date,
+            'payment_mode' => $receipt->payment_mode
+        ];
+
+        // Generate PDF
+        $pdf = Pdf::loadView('fee-receipt.pdf', compact('data'))->setPaper('A4', 'portrait');;
+
+        // **OPTION 1: Show PDF in Browser**
+        return $pdf->stream('fee_receipt.pdf');
+
+        // **OPTION 2: Force Download PDF**
+        // return $pdf->download('fee_receipt.pdf');
+    }
 }
+
+
+
