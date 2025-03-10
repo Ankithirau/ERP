@@ -18,13 +18,11 @@ class UserController extends Controller
 
     public function create()
     {
-
         return view('user.create');
     }
 
     public function store(Request $request)
     {
-
         // Validate input fields
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -47,7 +45,6 @@ class UserController extends Controller
         ]);
 
         // Redirect with success message
-        // return redirect()->route('index')->with('success', 'User created successfully!');
         return redirect()->route('index')->with('success', 'User created successfully!');
     }
 

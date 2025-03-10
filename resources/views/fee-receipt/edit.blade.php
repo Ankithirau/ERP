@@ -114,7 +114,14 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="class" class="form-label">Class</label>
-                                        <input type="text" class="form-control" id="class" name="class" value="{{ $receipt->class }}" required>
+                                        <select class="form-control fw-bold pb-3" id="class" name="class" required>
+                                            <option value="">Select Class</option>
+                                            <option value="6" {{ $receipt->class == '6' ? 'selected' : '' }}>Class 6</option>
+                                            <option value="7" {{ $receipt->class == '7' ? 'selected' : '' }}>Class 7</option>
+                                            <option value="8" {{ $receipt->class == '8' ? 'selected' : '' }}>Class 8</option>
+                                            <option value="9" {{ $receipt->class == '9' ? 'selected' : '' }}>Class 9</option>
+                                            <option value="10" {{ $receipt->class == '10' ? 'selected' : '' }}>Class 10</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="section" class="form-label">Section</label>

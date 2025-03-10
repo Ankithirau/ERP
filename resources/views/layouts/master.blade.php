@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="{{ asset('vendors/base/vendor.bundle.base.css')}}">
     <link rel="stylesheet" href="{{ asset('style/style.css')}}">
     <!-- endinject -->
-    <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" />
+    <link rel="shortcut icon" href="https://16.171.242.61/sdrecord/img/springdalelogo.png" />
+    {{-- <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" /> --}}
     <style>
         .form-control, select, textarea {
             border: 1px solid #007bff !important; /* Blue Border */

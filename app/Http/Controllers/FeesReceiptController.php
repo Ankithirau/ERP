@@ -177,7 +177,6 @@ class FeesReceiptController extends Controller
     {
         $receipt = FeesReceipt::findOrFail(2);
 
-
         $totalFees = array_sum(array_column($receipt->fees_details, 'amount'));
 
         $data = [

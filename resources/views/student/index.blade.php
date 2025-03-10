@@ -97,6 +97,7 @@
                                         <th>Name</th>
                                         <th>Mother's Name</th>
                                         <th>Date of Birth</th>
+                                        <th>Class</th>
                                         <th>Section</th>
                                         <th>Admission Year</th>
                                         <th class="text-center">Actions</th>
@@ -112,7 +113,8 @@
                                             <td>{{ $students->name }}</td>
                                             <td>{{ $students->mother_name }}</td>
                                             <td>{{ \Carbon\Carbon::parse($students->dob)->format('d M, Y') }}</td>
-                                            <td>{{ $students->section }}</td>
+                                            <td>{{ $students->class??'N/A' }}</td>
+                                            <td>{{ $students->section??'N/A' }}</td>
                                             <td>{{ $students->admission_year }}</td>
                                             <td class="text-center action-icons" style="white-space: nowrap;">
                                                 <a href="{{ route('edit-student', $students->student_id) }}" title="Edit" class="text-primary me-2">

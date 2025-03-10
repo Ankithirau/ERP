@@ -4,14 +4,13 @@
     <style>
         /* Card Header Styling */
         .card-header {
-            background-color: #f1f2f3; /* Dark Blue */
+            background-color: #f1f2f3;
             color: rgb(15, 15, 15);
             padding: 15px;
             font-size: 18px;
-            /* font-weight: bold; */
         }
 
-        /* Breadcrumb Styling (Matching List Page) */
+        /* Breadcrumb Styling */
         .breadcrumb-container {
             display: flex;
             align-items: center;
@@ -39,13 +38,12 @@
             color: #007bff;
         }
 
-        /* Centering Form */
+        /* Form Styling */
         .form-container {
-            max-width: 600px; /* Form width */
-            margin: 0 auto; /* Centering */
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Form Styling */
         .form-label {
             font-weight: 600;
         }
@@ -87,9 +85,8 @@
                         </div>
                     @endif
 
-                    <!-- ✅ Card Header with List Page Style Breadcrumbs -->
+                    <!-- ✅ Card Header with Breadcrumbs -->
                     <div class="card-header">
-
                         <div class="breadcrumb-container">
                             <i class="mdi mdi-home"></i>
                             <p><a href="{{ route('student') }}">Student</a> / </p>
@@ -125,26 +122,27 @@
                                         <input type="date" class="form-control" id="dob" name="dob" required>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="className " class="form-label">Class Name</label>
-                                    <select class="form-control fw-bold" id="className" name="class" required>
-                                        <option value="">Select Class</option>
-                                        <option value="6">Class 6</option>
-                                        <option value="7">Class 7</option>
-                                        <option value="8">Class 8</option>
-                                        <option value="9">Class 9</option>
-                                        <option value="10">Class 10</option>
-                                    </select>
-                                </div>
-                            </div>
 
                                 <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="className" class="form-label">Class</label>
+                                        <select class="form-control fw-bold pb-3" id="className" name="class" required>
+                                            <option value="">Select Class</option>
+                                            <option value="6">Class 6</option>
+                                            <option value="7">Class 7</option>
+                                            <option value="8">Class 8</option>
+                                            <option value="9">Class 9</option>
+                                            <option value="10">Class 10</option>
+                                        </select>
+                                    </div>
                                     <div class="col-md-6">
                                         <label for="section" class="form-label">Section</label>
                                         <input type="text" class="form-control" id="section" name="section" required>
                                     </div>
-                                    <div class="col-md-6">
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
                                         <label for="admission_year" class="form-label">Admission Year</label>
                                         <input type="text" class="form-control" id="admission_year" name="admission_year" required>
                                     </div>
@@ -155,6 +153,7 @@
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                     <a href="{{ route('student') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
+
                             </form>
                         </div> <!-- End of Form Container -->
                     </div> <!-- End of Card Body -->

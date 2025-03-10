@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     HomeController,
     StudentController,
-    MarkController,
+    MarksController,
     ResultController,
     UserController,
     FeesReceiptController
@@ -42,13 +42,14 @@ Route::middleware(['auth'])->group(function () {
             Route::put('students/update/{id}', 'update')->name('update-student');
             Route::get('students/view/{id}', 'show')->name('view-student');
             Route::get('students/delete/{id}', 'destroy')->name('delete-student');
+            Route::post('/student-ajax', 'fetchStudents')->name('student-ajax');
+
         });
 
-        Route::controller(MarkController::class)->group(function () {
+        Route::controller(MarksController::class)->group(function () {
             Route::get('marks', 'index')->name('mark');
             Route::get('marks/add', 'create')->name('addmarks');
             Route::post('marks/store', 'store')->name('store-marks');
-            Route::post('marks/student-ajax', 'studentajax')->name('student-ajax');
             Route::get('co-scholastic', 'coscholastic')->name('co-scholastic');
         });
 

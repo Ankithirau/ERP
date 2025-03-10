@@ -30,18 +30,19 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function dashboard(){
+    public function dashboard()
+    {
         $usercount = User::count();
         $marksheetcount = Marks::count();
         $resultcount = Result::count();
-        return view('dashboard',compact('usercount','marksheetcount','resultcount'));
+        return view('dashboard', compact('usercount', 'marksheetcount', 'resultcount'));
     }
 
     public function logout()
-{
-    Auth::logout();
-    return redirect('/login')->with('success', 'Logged out successfully.');
-}
+    {
+        Auth::logout();
+        return redirect('/login')->with('success', 'Logged out successfully.');
+    }
 
 
 }

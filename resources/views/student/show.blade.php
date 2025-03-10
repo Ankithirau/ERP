@@ -2,16 +2,13 @@
 
 @push('style')
     <style>
-            /* Card Header Styling */
-            .card-header {
-            background-color: #f1f2f3; /* Dark Blue */
+        .card-header {
+            background-color: #f1f2f3;
             color: rgb(15, 15, 15);
             padding: 15px;
             font-size: 18px;
-            /* font-weight: bold; */
         }
 
-        /* Breadcrumb Styling (Matching List Page) */
         .breadcrumb-container {
             display: flex;
             align-items: center;
@@ -24,11 +21,6 @@
             color: rgb(15, 15, 15);
         }
 
-        .breadcrumb-container p {
-            margin: 0;
-            font-size: 14px;
-        }
-
         .breadcrumb-container a {
             text-decoration: none;
             color: #151616;
@@ -39,13 +31,11 @@
             color: #007bff;
         }
 
-        /* Centering Form */
         .form-container {
-            max-width: 600px; /* Form width */
-            margin: 0 auto; /* Centering */
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Form Styling */
         .form-label {
             font-weight: 600;
         }
@@ -53,14 +43,13 @@
         .form-control {
             border-radius: 8px;
             padding: 10px;
+            background-color: #f8f9fa;
         }
 
-        /* Button Styling */
         .btn {
             border-radius: 8px;
             padding: 8px 20px;
         }
-
     </style>
 @endpush
 
@@ -69,8 +58,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-
-                    <!-- ✅ Card Header with List Page Style Breadcrumbs -->
+                    <!-- ✅ Breadcrumbs for Navigation -->
                     <div class="card-header">
                         <div class="breadcrumb-container">
                             <i class="mdi mdi-home"></i>
@@ -79,49 +67,54 @@
                         </div>
                     </div>
 
-                    <!-- ✅ Centered View Form -->
+                    <!-- ✅ Student Details Form -->
                     <div class="card-body">
                         <div class="form-container">
                             <h4 class="text-center mb-4">Student Details</h4>
                             <form>
                                 @csrf
+
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="student_id" class="form-label">Student ID</label>
-                                        <input type="text" class="form-control" name="student_id" value="{{ $student->student_id }}" readonly>
+                                        <label class="form-label">Student ID</label>
+                                        <input type="text" class="form-control" value="{{ $student->student_id }}" readonly>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="admission_no" class="form-label">Admission No.</label>
-                                        <input type="text" class="form-control" name="admission_no" value="{{ $student->Admission_no }}" readonly>
+                                        <label class="form-label">Admission No.</label>
+                                        <input type="text" class="form-control" value="{{ $student->Admission_no }}" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="name" class="form-label">Student Name</label>
-                                        <input type="text" class="form-control" name="name" value="{{ $student->name }}" readonly>
+                                        <label class="form-label">Student Name</label>
+                                        <input type="text" class="form-control" value="{{ $student->name }}" readonly>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="mother_name" class="form-label">Mother's Name</label>
-                                        <input type="text" class="form-control" name="mother_name" value="{{ $student->mother_name }}" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="dob" class="form-label">Date of Birth</label>
-                                        <input type="date" class="form-control" name="dob" value="{{ $student->dob }}" readonly>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="section" class="form-label">Section</label>
-                                        <input type="text" class="form-control" name="section" value="{{ $student->section }}" readonly>
+                                        <label class="form-label">Mother's Name</label>
+                                        <input type="text" class="form-control" value="{{ $student->mother_name }}" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="admission_year" class="form-label">Admission Year</label>
-                                        <input type="number" class="form-control" name="admission_year" value="{{ $student->admission_year }}" readonly>
+                                        <label class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-control" value="{{ $student->dob }}" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Section</label>
+                                        <input type="text" class="form-control" value="{{ $student->section }}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Class</label>
+                                        <input type="text" class="form-control" value="{{ $student->class }}" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Admission Year</label>
+                                        <input type="text" class="form-control" value="{{ $student->admission_year }}" readonly>
                                     </div>
                                 </div>
 
@@ -130,9 +123,9 @@
                                     <a href="{{ route('student') }}" class="btn btn-secondary">Back</a>
                                 </div>
                             </form>
-                        </div> <!-- End of Form Container -->
-                    </div> <!-- End of Card Body -->
-                </div> <!-- End of Card -->
+                        </div> 
+                    </div> 
+                </div> 
             </div>
         </div>
     </div>
