@@ -34,9 +34,42 @@
         .table-dark-blue tbody tr:hover {
             background-color: #003366;
         }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-select, .form-control {
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle !important;
+        }
+
+        .card-header {
+            background-color: #f1f2f3;
+            color: #151515;
+            padding: 15px;
+            font-size: 18px;
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            color: #151616;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .breadcrumb a:hover {
+            color: #007bff;
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
     </style>
 @endpush
-
 
 @section('panel')
     <div class="container-fluid">
@@ -66,13 +99,9 @@
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item">
-                                        <a href="{{ route('dashboard') }}" class="text-decoration-none text-secondary">Dashboard</a>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <a href="{{ route('student') }}" class="text-decoration-none text-secondary">Marks</a>
-                                    </li>
-                                    <li class="breadcrumb-item active text-primary" aria-current="page" class="text-decoration-none">Add</li>
+                                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('mark') }}">Marks</a></li>
+                                    <li class="breadcrumb-item active text-primary" aria-current="page">Add</li>
                                 </ol>
                             </nav>
                             <a href="{{ route('mark') }}" class="btn btn-primary btn-sm">
@@ -86,46 +115,85 @@
 
                             <!-- Student Selection -->
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="student_id" class="form-label fw-bold">Select Student</label>
+                                <!-- <div class="col-md-6 mb-3">
+                                    <label for="student_id" class="form-label">Select Student</label>
                                     <select class="form-select" id="student_id" name="student_id" required>
                                         <option value="" selected disabled>-- Select Student --</option>
                                         @foreach($students as $student)
                                             <option value="{{ $student->student_id }}">{{ $student->name }}</option>
                                         @endforeach
                                     </select>
+                                </div> -->
+                                <div class="col-md-6">
+                                    <label for="className" class="form-label fw-bold">Class Name</label>
+                                    <select class="form-control fw-bold" id="className" name="class" required>
+                                        <option value="">Select Class</option>
+                                        <option value="6">Class 6</option>
+                                        <option value="7">Class 7</option>
+                                        <option value="8">Class 8</option>
+                                        <option value="9">Class 9</option>
+                                        <option value="10">Class 10</option>
+                                    </select>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="academic_year" class="form-label fw-bold">Academic Year</label>
+                                <div class="col-md-6">
+                                    <label for="sectionName" class="form-label fw-bold">Section</label>
+                                    <select class="form-control fw-bold" id="sectionName" name="section" required>
+                                        <option value="">Select Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+
+                                <!-- <div class="col-md-6 mb-3">
+                                    <label for="academic_year" class="form-label">Academic Year</label>
                                     <input type="text" name="academic_year" id="academic_year" class="form-control"
                                         placeholder="2024-2025" required>
-                                </div>
+                                </div> -->
                             </div>
 
                             <!-- Roll No & Class -->
                             <div class="row">
+                            <div class="col-md-6 mb-3">
+                                    <label for="academic_year" class="form-label fw-bold">Academic Year</label>
+                                    <input type="text" name="academic_year" id="academic_year" class="form-control"
+                                        placeholder="2024-2025" required>
+                                </div>
+
                                 <div class="col-md-6 mb-3">
-                                    <label for="rollno" class="form-label fw-bold">Roll No</label>
+                                    <label for="rollno" class="form-label">Roll No</label>
                                     <input type="number" name="rollno" id="rollno" class="form-control"
                                         placeholder="Enter Roll Number" required>
                                 </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="class" class="form-label fw-bold">Class</label>
-                                    <input type="text" name="class" id="class" class="form-control"
-                                        placeholder="Enter Class" required>
-                                </div>
                             </div>
 
-                            <!-- Term Selection -->
-                            <div class="mb-4">
-                                <label for="term" class="form-label fw-bold">Select Term</label>
-                                <select name="term" id="term" class="form-select" required onchange="updateTable()">
-                                    <option value="" selected disabled>Select Term</option>
-                                    <option value="Term1">Term 1</option>
-                                    <option value="Term2">Term 2</option>
-                                </select>
+                            <!-- Term & Subject Selection -->
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="term" class="form-label">Select Term</label>
+                                    <select name="term" id="term" class="form-select" required onchange="updateTable()">
+                                        <option value="" selected disabled>Select Term</option>
+                                        <option value="Term1">Term 1</option>
+                                        <option value="Term2">Term 2</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="student" class="form-label fw-bold">Select Student</label>
+                                    <select class="form-control" id="studentold" name="student" >
+                                        <option value="">Select Student</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="subject" class="form-label">Select Subject</label>
+                                    <select name="subject" id="subject" class="form-select" required>
+                                        <option value="" selected disabled>-- Select Subject --</option>
+                                        @foreach(['English', 'Hindi', 'Marathi/Sanskrit', 'Mathematics', 'Computers'] as $subject)
+                                            <option value="{{ $subject }}">{{ $subject }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <!-- Marks Table -->
@@ -133,7 +201,7 @@
                                 <table class="table table-bordered text-center align-middle">
                                     <thead class="table-dark-blue text-dark">
                                         <tr id="table-header">
-                                            <th>Subject</th>
+                                            <th>Student Name</th>
                                             <th>Exam Marks (Term 1)</th>
                                             <th>CT Marks (Term 1)</th>
                                             <th>PT Calc (Term 1)</th>
@@ -144,18 +212,17 @@
                                         </tr>
                                     </thead>
                                     <tbody id="marks-table">
-                                        @foreach(['English', 'Hindi', 'Marathi/Sanskrit', 'Mathematics', 'Computers'] as $subject)
                                             <tr>
-                                                <td class="fw-bold">{{ $subject }}</td>
-                                                @foreach(['exam', 'ct', 'pt_calc', 'periodic_test', 'subject_enrichment', 'multiple_assessment', 'portfolio'] as $category)
-                                                    <td>
-                                                        <input type="number"
-                                                            name="marks[{{ strtolower(str_replace(' ', '_', $subject)) }}][{{ $category }}_term1]"
-                                                            class="form-control text-center marks-input" required>
-                                                    </td>
-                                                @endforeach
+                                                <td class="fw-bold" id="student"></td>
+                                                       <td> <input type="number" name="subject1_term1]" class="form-control text-center marks-input" required></td>
+                                                       <td><input type="number" name="subject1_term1]" class="form-control text-center marks-input" required></td>
+                                                       <td><input type="number" name="subject1_term1]" class="form-control text-center marks-input" required></td>
+                                                       <td><input type="number" name="subject1_term1]" class="form-control text-center marks-input" required></td>
+                                                       <td><input type="number" name="subject1_term1]" class="form-control text-center marks-input" required></td>
+                                                       <td><input type="number" name="subject1_term1]" class="form-control text-center marks-input" required></td>
+                                                       <td><input type="number" name="subject1_term1]" class="form-control text-center marks-input" required></td>
+
                                             </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -173,34 +240,51 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#academic_year').blur(function () {
+            let academicYear = $(this).val();
+            let className = $('#className').val().trim();
+            let section = $('#sectionName').val().trim();
 
-    <!-- JavaScript for Term Selection -->
-    <script>
-        function updateTable() {
-            let selectedTerm = document.getElementById("term").value;
-            let tableHeader = document.getElementById("table-header");
-            let marksTable = document.getElementById("marks-table");
-            let categories = ['exam', 'ct', 'pt_calc', 'periodic_test', 'subject_enrichment', 'multiple_assessment', 'portfolio'];
-
-            // Update Table Header
-            let newHeaderHTML = `<th>Subject</th>`;
-            categories.forEach(category => {
-                newHeaderHTML += `<th>${capitalizeWords(category.replace('_', ' '))} (${selectedTerm})</th>`;
-            });
-            tableHeader.innerHTML = newHeaderHTML;
-
-            // Update Table Inputs
-            document.querySelectorAll(".marks-input").forEach((input, index) => {
-                let subjectIndex = Math.floor(index / categories.length);
-                let categoryIndex = index % categories.length;
-                let subject = ['english', 'hindi', 'marathi_sanskrit', 'mathematics', 'computers'][subjectIndex];
-
-                input.name = `marks[${subject}][${categories[categoryIndex]}_${selectedTerm.toLowerCase()}]`;
-            });
-        }
-
-        function capitalizeWords(str) {
-            return str.replace(/\b\w/g, char => char.toUpperCase());
-        }
-    </script>
+            if (academicYear.trim() !== '') {
+                $.ajax({
+                    url: "{{ route('student-ajax') }}", // Change to your Laravel route
+                    type: "POST",
+                    data: {
+                        academic_year: academicYear,
+                        className:className,
+                        section:section,
+                        _token: "{{ csrf_token() }}" // CSRF protection
+                    },
+                    success: function (response) {
+                        if (response) {
+                            console.log(response);
+                            let marksTable = $("#marks-table");
+                            marksTable.empty(); // Clear existing rows
+                            $.each(response, function (index, student) {
+                                let row = `<tr><td class="fw-bold">${student.name}</td>`;
+                                // Adding input fields for each category dynamically
+                                let categories = ['exam', 'ct', 'pt_calc', 'periodic_test', 'subject_enrichment', 'multiple_assessment', 'portfolio'];
+                                categories.forEach(category => {
+                                    row += `<td>
+                                                <input type="number" name="marks[${student.student_id}][${category}_term1]" class="form-control text-center marks-input" required>
+                                            </td>`;
+                                });
+                                row += `</tr>`;
+                                marksTable.append(row); // Append row to table
+                            });
+                } else {
+                    alert("Student Not Found! Please Check Input.");
+                }
+                    },
+                    error: function () {
+                        alert("Something went wrong.");
+                    }
+                });
+            }
+        });
+    });
+</script>
 @endsection

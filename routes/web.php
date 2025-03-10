@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('marks', 'index')->name('mark');
             Route::get('marks/add', 'create')->name('addmarks');
             Route::post('marks/store', 'store')->name('store-marks');
+            Route::post('marks/student-ajax', 'studentajax')->name('student-ajax');
             Route::get('co-scholastic', 'coscholastic')->name('co-scholastic');
         });
 

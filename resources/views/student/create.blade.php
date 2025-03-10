@@ -89,6 +89,7 @@
 
                     <!-- ✅ Card Header with List Page Style Breadcrumbs -->
                     <div class="card-header">
+
                         <div class="breadcrumb-container">
                             <i class="mdi mdi-home"></i>
                             <p><a href="{{ route('student') }}">Student</a> / </p>
@@ -102,7 +103,7 @@
                             <h4 class="text-center mb-4">Add Student</h4>
                             <form action="{{ route('store-student') }}" method="POST">
                                 @csrf
-                                
+
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="admission_no" class="form-label">Admission No.</label>
@@ -124,6 +125,19 @@
                                         <input type="date" class="form-control" id="dob" name="dob" required>
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="className " class="form-label">Class Name</label>
+                                    <select class="form-control fw-bold" id="className" name="class" required>
+                                        <option value="">Select Class</option>
+                                        <option value="6">Class 6</option>
+                                        <option value="7">Class 7</option>
+                                        <option value="8">Class 8</option>
+                                        <option value="9">Class 9</option>
+                                        <option value="10">Class 10</option>
+                                    </select>
+                                </div>
+                            </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">

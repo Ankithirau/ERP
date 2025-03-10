@@ -30,29 +30,43 @@ class MarkController extends Controller
 
     public function store(Request $request)
     {
-        return $request->all();
+        // return $request->all();
         $request->validate([
-            'student_name' => 'required|string',
+            //'student' => 'required|string',
             'academic_year' => 'required|string',
             'rollno' => 'required|string',
             'class' => 'required|string',
+            'section' => 'required|string',
             'term' => 'required|string',
             'marks' => 'required|array',
+            'subject' => 'required|string',
         ]);
 
-        foreach ($request->marks as $subject => $markDetails) {
-            Marks::create([
-                'student_name' => $request->student_name,
-                'academic_year' => $request->academic_year,
-                'rollno' => $request->rollno,
-                'class' => $request->class,
-                'term' => $request->term,
-                'subject' => $subject,
-                'marks' => json_encode($markDetails), // Storing marks as JSON
-            ]);
-        }
+        //$studentid = $request->student;
+        $academic_year = $request->academic_year;
+        $rollno = $request->rollno;
+        $class = $request->class;
+        $stsectionudentid = $request->section;
+        $subject = $request->subject;
+        $term = $request->term;
+        $Key = array_keys($request->input('marks'));
+
+
+
+
+
+
+
 
         return response()->json(['message' => 'Marks stored successfully'], 200);
+    }
+
+    public function studentajax(Request $request)
+        {
+          $student = Student::where(['class'=>$request->className,'section'=>$request->section,'admission_year'=>$request->academic_year])->get();
+          return response()->json($student);
+
+
     }
 
 }
