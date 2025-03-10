@@ -54,7 +54,22 @@
                     @endif
 
                     <div class="card-header">
-                        <h4 class="text-center mb-0">Edit Fee Receipt</h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="{{ route('dashboard') }}"
+                                            class="text-decoration-none text-secondary">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <a href="{{ route('student') }}"
+                                            class="text-decoration-none text-secondary">Receipt</a>
+                                    </li>
+                                    <li class="breadcrumb-item active text-primary" aria-current="page"
+                                        class="text-decoration-none">Generate</li>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
 
                     @if(session('success'))
@@ -64,18 +79,18 @@
                         </div>
                     @endif
                     @if(session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
                     <div class="card-body">
                         <div class="form-container">
+                            <h4 class="text-center mb-5">Edit Fee Receipt</h4>
                             <form action="{{ route('receipts.update', $receipt->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="student_name" class="form-label">Student Name</label>

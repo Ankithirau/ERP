@@ -36,6 +36,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item">
+                                        <i class="mdi mdi-home text-muted hover-cursor"></i>
                                         <a href="{{ route('dashboard') }}"
                                             class="text-decoration-none text-secondary">Dashboard</a>
                                     </li>

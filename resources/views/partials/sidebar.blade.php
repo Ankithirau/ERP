@@ -57,12 +57,12 @@
       </a>
     </li> -->
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+      <a class="nav-link {{ request()->is('index') ? 'active' : '' }}" data-bs-toggle="collapses" href={{ route('index') }} aria-expanded="false" aria-controls="auth">
         <i class="mdi mdi-account-multiple menu-icon"></i>
         <span class="menu-title">Manage User</span>
-        <i class="menu-arrow"></i>
+        <i class="menu-arrow d-none"></i>
       </a>
-      <div class="collapse" id="auth">
+      <div class="collapse d-none" id="auth">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href={{ route('index') }}> Users </a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> User's Change Password </a></li>

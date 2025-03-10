@@ -60,7 +60,6 @@
                             <div class="form-container">
                                 <form action="{{ route('receipts.store') }}" method="POST">
                                     @csrf
-
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="student_name" class="form-label">Student Name</label>
