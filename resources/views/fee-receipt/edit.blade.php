@@ -116,16 +116,19 @@
                                         <label for="class" class="form-label">Class</label>
                                         <select class="form-control fw-bold pb-3" id="class" name="class" required>
                                             <option value="">Select Class</option>
-                                            <option value="6" {{ $receipt->class == '6' ? 'selected' : '' }}>Class 6</option>
-                                            <option value="7" {{ $receipt->class == '7' ? 'selected' : '' }}>Class 7</option>
-                                            <option value="8" {{ $receipt->class == '8' ? 'selected' : '' }}>Class 8</option>
-                                            <option value="9" {{ $receipt->class == '9' ? 'selected' : '' }}>Class 9</option>
-                                            <option value="10" {{ $receipt->class == '10' ? 'selected' : '' }}>Class 10</option>
+                                            @foreach ($classes as $key => $value)
+                                                <option value="{{ $key }}" {{ $receipt->class == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="section" class="form-label">Section</label>
-                                        <input type="text" class="form-control" id="section" name="section" value="{{ $receipt->section }}" required>
+                                        <select class="form-control fw-bold pb-3" id="section" name="section" required>
+                                            <option value="">Select Class</option>
+                                            @foreach ($sections as $key => $value)
+                                                <option value="{{ $key }}" {{ $receipt->section == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
@@ -159,6 +162,15 @@
                                     </div>
                                 </div>
 
+                                <div class="row mb-3" id="payment_info_container" style="display: none;">
+                                    <div class="col-md-6">
+                                        <label id="payment_info_label" class="form-label"></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="payment_info" name="payment_info" value="{{ $receipt->payment_info ?? '' }}" placeholder="Enter Payment Details">
+                                    </div>
+                                </div>
+
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Update Receipt</button>
                                     <a href="{{ route('receipts.index') }}" class="btn btn-secondary">Cancel</a>
@@ -178,5 +190,35 @@
         var selectedOption = this.options[this.selectedIndex];
         document.getElementById('student_id').value = selectedOption.getAttribute('data-id') || '';
     });
+    document.getElementById('payment_mode').addEventListener('change', function () {
+        var selectedMode = this.value;
+        var infoContainer = document.getElementById('payment_info_container');
+        var infoInput = document.getElementById('payment_info');
+        var infoLabel = document.getElementById('payment_info_label');
+
+        if (selectedMode === "") {
+            infoContainer.style.display = "none";
+            infoInput.removeAttribute('required');
+            infoInput.value = ""; 
+        } else {
+            infoContainer.style.display = "flex";
+            infoInput.setAttribute('required', 'required');
+            
+            if (selectedMode === "Cash") {
+                infoLabel.innerText = "Enter Receipt Number";
+                infoInput.placeholder = "e.g., RCPT123456";
+            } else if (selectedMode === "Card") {
+                infoLabel.innerText = "Enter Last 4 Digits of Card";
+                infoInput.placeholder = "e.g., 1234";
+            } else if (selectedMode === "UPI") {
+                infoLabel.innerText = "Enter UPI ID";
+                infoInput.placeholder = "e.g., abc@upi";
+            } else if (selectedMode === "Bank Transfer") {
+                infoLabel.innerText = "Enter Transaction ID";
+                infoInput.placeholder = "e.g., TXN12345678";
+            }
+        }
+    });
+
 </script>
 @endpush

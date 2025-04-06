@@ -41,20 +41,22 @@
                                             class="text-decoration-none text-secondary">Dashboard</a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('student') }}"
+                                        <a href="{{ route('excellence') }}"
                                             class="text-decoration-none text-secondary">Co-Scholastic</a>
                                     </li>
                                     <li class="breadcrumb-item active text-primary" aria-current="page"
                                         class="text-decoration-none">List</li>
                                 </ol>
                             </nav>
-                            <a href="{{ route('mark') }}" class="btn btn-primary btn-sm">
-                                <i class="mdi mdi-arrow-left"></i> Back to Marks List
+
+                        </div>
+                        <div class="mb-4">
+                            <a href="{{ route('create.excellence') }}" class="btn btn-primary btn-sm shadow-sm">
+                                <i class="mdi mdi-plus"></i> Add Excellence
                             </a>
                         </div>
                         <h4 class="card-title">Co-Scholastic</h4>
-                        <p class="card-description">
-                        </p>
+                        <p class="card-description"></p>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover align-middle">
                                 <thead class="table-dark-blue sticky-top">
@@ -77,38 +79,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($excellenceRecords as $record)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-center" style="white-space: nowrap;">
-                                            <a href="edit-url" title="Edit" class="text-primary me-3">
-                                                <i class="mdi mdi-pencil fs-5"></i>
-                                            </a>
-                                            <a href="view-url" title="View" class="text-success me-3">
-                                                <i class="mdi mdi-eye fs-5"></i>
-                                            </a>
-                                            <a href="delete-url" title="Delete" class="text-danger">
-                                                <i class="mdi mdi-trash-can fs-5"></i>
-                                            </a>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $record->student_id }}</td>
+                                        <td>{{ $record->academic_year }}</td>
+                                        <td>{{ $record->class }}</td>
+                                        <td>{{ $record->term1_work_education }}</td>
+                                        <td>{{ $record->term1_art_education }}</td>
+                                        <td>{{ $record->term1_physical_education }}</td>
+                                        <td>{{ $record->term1_discipline }}</td>
+                                        <td>{{ $record->term2_work_education }}</td>
+                                        <td>{{ $record->term2_art_education }}</td>
+                                        <td>{{ $record->term2_physical_education }}</td>
+                                        <td>{{ $record->term2_discipline }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ route('edit.excellence',['id'=>$record->id]) }}" class="text-success me-2 text-decoration-none"><i class="mdi mdi-pencil fs-5"></i></a>
+                                            <a href="javascript:void(0);" onclick="confirmDelete('{{ route('destroy.excellence', $record->id) }}')" class="text-danger text-decoration-none"><i class="mdi mdi-trash-can fs-5"></i></a>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                         <div class="d-flex justify-content-left mt-3">
-
+                            {{ $excellenceRecords->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>
@@ -116,3 +111,12 @@
         </div>
     </div>
 @endsection
+@push('script')
+<script>
+    function confirmDelete(url) {
+        if (confirm("Are you sure you want to delete this record?")) {
+            window.location.href = url;
+        }
+    }
+</script>
+@endpush

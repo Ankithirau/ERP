@@ -72,27 +72,31 @@
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label for="academicYear" class="form-label">Academic Year</label>
-                                    <input type="text" id="academicYear" name="academic_year" class="form-control" required>
+                                    <select id="academicYear" name="academic_year" class="form-select" required>
+                                        <option value="">Select Academic Year</option>
+                                        @foreach ($academicYears as $year)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endforeach
+                                    </select>
+                                    {{-- <input type="text" id="academicYear" name="academic_year" class="form-control" required> --}}
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="className" class="form-label">Class</label>
+                                    
                                     <select id="className" name="class" class="form-control pb-3" required>
                                         <option value="">Select Class</option>
-                                        <option value="6">Class 6</option>
-                                        <option value="7">Class 7</option>
-                                        <option value="8">Class 8</option>
-                                        <option value="9">Class 9</option>
-                                        <option value="10">Class 10</option>
+                                        @foreach ($classes as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="sectionName" class="form-label">Section</label>
                                     <select id="sectionName" name="section" class="form-control pb-3" required>
                                         <option value="">Select Section</option>
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
+                                        @foreach ($sections as $section)
+                                            <option value="{{ $section }}">{{ $section }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -124,13 +128,15 @@
                                         <tr>
                                             <th>Student Name</th>
                                             <th>Roll No.</th>
-                                            <th>Exam Marks (<span id="term-display" class="term-label">Term 1</span>)</th>
-                                            <th>CT Marks (<span id="term-display" class="term-label">Term 1</span>)</th>
+                                            <th>CT 1 Marks (<span id="term-display" class="term-label">Term 1</span>)</th>
+                                            <th>CT 2 Marks (<span id="term-display" class="term-label">Term 1</span>)</th>
+                                            <th>Periodic Test (<span id="term-display" class="term-label">Term 1</span>)</th>
                                             <th>PT Calc (<span id="term-display" class="term-label">Term 1</span>)</th>
-                                            <th>Periodic Test (<span id="term-display">Term 1</span>)</th>
-                                            <th>Subject Enrichment (<span id="term-display">Term 1</span>)</th>
-                                            <th>Multiple Assessment (<span id="term-display">Term 1</span>)</th>
-                                            <th>Portfolio (<span id="term-display">Term 1</span>)</th>
+                                            <th>Subject Enrichment (<span id="term-display" class="term-label">Term 1</span>)</th>
+                                            <th>Multiple Assessment (<span id="term-display" class="term-label">Term 1</span>)</th>
+                                            <th>Portfolio (<span id="term-display" class="term-label">Term 1</span>)</th>
+                                            <th>Exam Marks (<span id="term-display" class="term-label">Term 1</span>)</th>
+                                            <th>Total Marks</th> <!-- New column for total -->
                                         </tr>
                                     </thead>
                                     <tbody id="marks-table">
@@ -153,22 +159,84 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            function calculateTotalMarks(row) {
+                let total = 0;
+                row.find('.marks-input,.ct1-input, .ct2-input, .ptcalc-input, .periodic-test-input').each(function () {
+                    let value = parseFloat($(this).val()) || 0;
+                    total += value;
+                });
+
+                if (total > 100) {
+                    alert("Total marks cannot exceed 100.");
+                    row.find('.total-marks').text(total).css("color", "red");
+                } else {
+                    row.find('.total-marks').text(total).css("color", "black");
+                }
+                row.find(".total-marks-input").val(total);
+            }
+
+            $(document).on('input', '.marks-input,.ct1-input, .ct2-input, .ptcalc-input, .periodic-test-input', function () {
+                let row = $(this).closest('tr');
+                calculateTotalMarks(row);
+            });
+
             function updateTermLabels() {
-                let selectedTerm = $('#term').val();
+                let selectedTerm = $('#term').val().toUpperCase();
                 if (selectedTerm) {
-                    $('.term-label').text(`${selectedTerm}`);
+                    let formattedTerm = selectedTerm.replace(/term(\d+)/i, (_, num) => `Term ${num}`);
+                    $('.term-label').text(formattedTerm.charAt(0).toUpperCase() + formattedTerm.slice(1));
                 } else {
                     $('.term-label').text('Term 1');
                 }
             }
 
-            // Call function when term dropdown changes
             $('#term').on('change', function () {
                 updateTermLabels();
             });
 
-            // Initial call in case term is pre-selected
             updateTermLabels();
+
+            function calculatePeriodicTest(ct1Input, ct2Input, ptcalInput, periodicTestInput) {
+                let ct1Value = parseFloat(ct1Input.val()) || 0;
+                let ct2Value = parseFloat(ct2Input.val()) || 0;
+                let periodicTestValue = parseFloat(periodicTestInput.val()) || 0;
+                // let ptcalValue = parseFloat(ptcalInput.val()) || 0;
+                let classValue = $('#className').val();
+                let factor = 0;
+                let classNumber = parseInt(classValue.replace('Class ', '').trim()) || 0;
+
+                if (classNumber === 1 || classNumber === 2) {
+                    factor = 0;
+                } else if (classNumber === 3 || classNumber === 4) {
+                    factor = 0.2; 
+                } else if (classNumber >= 5 && classNumber <= 10) {
+                    factor = 0.125;
+                }
+
+                console.log("CT1:", ct1Value, "CT2:", ct2Value, "periodicTest:", periodicTestValue, "Factor:", factor);
+
+                if (factor > 0) {
+                    let maxCTMarks = Math.max(ct1Value, ct2Value); 
+                    let ptcalValue = Math.round((maxCTMarks + periodicTestValue) * factor);
+                    // let periodicTestValue = Math.round(maxCTMarks + (ptcalValue * factor));
+                    ptcalInput.val(ptcalValue);
+                    console.log("Calculated ptcal Test:", ptcalInput);
+                } else {
+                    ptcalInput.val(factor === 0 ? 'No calculation' : '');
+                }
+            }
+
+            function attachListeners() {
+                $('#marks-table').on('input', '.ct1-input, .ct2-input, .periodic-test-input', function () {
+                    let row = $(this).closest('tr');
+                    let ct1Input = row.find('.ct1-input');
+                    let ct2Input = row.find('.ct2-input');
+                    let ptcalInput = row.find('.ptcalc-input');
+                    let periodicTestInput = row.find('.periodic-test-input');
+
+                    calculatePeriodicTest(ct1Input, ct2Input, ptcalInput, periodicTestInput);
+                });
+            }
 
             function fetchStudents() {
                 let academicYear = $('#academicYear').val().trim();
@@ -183,7 +251,7 @@
                 }
 
                 $.ajax({
-                    url: "{{ route('student-ajax') }}", // Laravel route
+                    url: "{{ route('student-ajax') }}",
                     type: "POST",
                     data: {
                         academic_year: academicYear,
@@ -228,32 +296,52 @@
                         //     'portfolio': `${subjectColumn}_portfolio`
                         // };
 
-                        // Define the fields based on term selection
                         let fields = {
-                            'exam': `${term}_${subject}`,
                             'ct': `${term}_${subject}_ct`,
-                            'pt_calc': `${term}_${subject}_pt_calc`,
+                            'ct_2': `${term}_${subject}_ct_2`,
                             'periodic_test': `${term}_${subject}_periodic_test`,
+                            'pt_calc': `${term}_${subject}_pt_calc`,
                             'subject_enrichment': `${term}_${subject}_subject_enrichment`,
                             'multiple_assessment': `${term}_${subject}_multiple_assessment`,
-                            'portfolio': `${term}_${subject}_portfolio`
+                            'portfolio': `${term}_${subject}_portfolio`,
+                            'exam': `${term}_${subject}`,
                         };
 
-                        // Loop through students and populate table
                         $.each(response, function (index, student) {
                             let row = `<tr>
                                         <td class="fw-bold">${student.name}</td>
                                         <td><input type="text" name="marks[${student.student_id}][rollno]" class="form-control text-center" value="${student.rollno || ''}" required></td>`;
 
-                            // Adding dynamic fields
                             Object.keys(fields).forEach(key => {
+                                let inputClass = '';
+
+                                // let inputClass = key === 'pt_calc' ? 'ptcalc-input' : (key === 'periodic_test' ? 'periodic-test-input' : 'marks-input');
+                                if (key === 'ct') {
+                                    inputClass = 'ct1-input';
+                                    maxLength = 10;
+                                } else if (key === 'ct_2') {
+                                    inputClass = 'ct2-input';
+                                    maxLength = 10;
+                                } else if (key === 'pt_calc') {
+                                    inputClass = 'ptcalc-input';
+                                    maxLength = 100;
+                                } else if (key === 'periodic_test') {
+                                    inputClass = 'periodic-test-input';
+                                    maxLength = 100;
+                                }else{
+                                    inputClass = 'marks-input';
+                                    maxLength = 100;
+                                }
                                 row += `<td>
-                                            <input type="number" name="marks[${student.student_id}][${fields[key]}]" class="form-control text-center marks-input" required>
-                                        </td>`;
+                                    <input type="number" name="marks[${student.student_id}][${fields[key]}]" class="form-control text-center ${inputClass}" max="${maxLength}" min="0" required>
+                                </td>`;
                             });
 
+                            row += `<td class="fw-bold"><span class="total-marks">0</span> <input type="hidden" name="marks[${student.student_id}][${term}_${subject}_total]" class="total-marks-input" value="0"></td>`;
                             row += `</tr>`;
                             marksTable.append(row);
+                            attachListeners();
+
                         });
 
                     },
@@ -264,7 +352,6 @@
                 });
             }
 
-            // Trigger AJAX when any of these fields change
             $('#subject').on('change', fetchStudents);
         });
     </script>

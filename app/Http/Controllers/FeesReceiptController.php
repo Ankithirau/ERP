@@ -22,7 +22,8 @@ class FeesReceiptController extends Controller
             'fees.*.name' => 'required|string|max:255',
             'fees.*.amount' => 'required|numeric|min:0',
             'payment_date' => 'required|date',
-            'payment_mode' => 'required|string|max:50'
+            'payment_mode' => 'required|string|max:50',
+            'payment_info' => 'nullable|string|max:255'
         ], [
             'student_name.required' => 'Student Name is required. Please enter the full name of the student.',
             'student_id.required' => 'Student ID is required. Ensure you enter a valid Student ID.',
@@ -44,7 +45,8 @@ class FeesReceiptController extends Controller
                 'fees_details' => json_encode($request->fees), // JSON को Array में बदलें
                 'amount' => $totalFees,
                 'payment_date' => $request->payment_date,
-                'payment_mode' => $request->payment_mode
+                'payment_mode' => $request->payment_mode,
+                'payment_info' => $request->payment_info 
             ];
 
             $pdf = PDF::loadView('fee-receipt.pdf', compact('data'))->setPaper('A4', 'portrait');
@@ -61,6 +63,7 @@ class FeesReceiptController extends Controller
                 'amount' => $data['amount'],
                 'payment_date' => $data['payment_date'],
                 'payment_mode' => $data['payment_mode'],
+                'payment_info' => $data['payment_info'],
                 'pdf_path' => $pdfPath
             ]);
 
@@ -69,27 +72,55 @@ class FeesReceiptController extends Controller
             return back()->with('success', $th->getMessage());
         }
     }
-
-    public function receiptIndex()
+    public function receiptIndex(Request $request)
     {
-        $receipts = FeesReceipt::orderBy('payment_date', 'desc')->paginate(10);
+        $query = FeesReceipt::query();
+
+        if ($request->filled('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('receipt_no', 'like', "%{$searchTerm}%")
+                    ->orWhere('student_name', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        if ($request->filled('payment_date')) {
+            $query->whereDate('payment_date', $request->input('payment_date'));
+        }
+
+        if ($request->filled('payment_mode')) {
+            $query->where('payment_mode', $request->input('payment_mode'));
+        }
+
+        $receipts = $query->orderBy('payment_date', 'desc')->paginate(10);
+
         return view('fee-receipt.index', compact('receipts'));
     }
-
     public function receiptCreate()
     {
         $students = Student::select('student_id', 'name')->get();
         $receipts = FeesReceipt::orderBy('payment_date', 'desc')->paginate(10);
-        return view('fee-receipt.create', compact('receipts','students'));
+        $classes = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $classes[$i] = "Class $i";
+        }
+    
+        $sections = ['A', 'B', 'C', 'D'];
+        return view('fee-receipt.create', compact('receipts','students','classes', 'sections'));
     }
     public function receiptEdit($id)
     {
         $receipt = FeesReceipt::findOrFail($id);
         $receipt->fees_details = json_decode($receipt->fees_details, true);
         $students = Student::select('student_id', 'name')->get();
-        return view('fee-receipt.edit', compact('receipt', 'students'));
+        $classes = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $classes[$i] = "Class $i";
+        }
+    
+        $sections = ['A', 'B', 'C', 'D'];
+        return view('fee-receipt.edit', compact('receipt', 'students','classes','sections'));
     }
-
     public function updateReceipt(Request $request, $id)
     {
         $request->validate([
@@ -101,7 +132,8 @@ class FeesReceiptController extends Controller
             'fees.*.name' => 'required|string|max:255',
             'fees.*.amount' => 'required|numeric|min:0',
             'payment_date' => 'required|date',
-            'payment_mode' => 'required|string|max:50'
+            'payment_mode' => 'required|string|max:50',
+            'payment_info' => 'nullable|string|max:255' // Payment Info (Transaction ID, UPI ID, etc.)
         ]);
 
         try {
@@ -118,10 +150,10 @@ class FeesReceiptController extends Controller
                 'fees_details' => json_encode($request->fees),
                 'amount' => $totalFees,
                 'payment_date' => $request->payment_date,
-                'payment_mode' => $request->payment_mode
+                'payment_mode' => $request->payment_mode,
+                'payment_info' => $request->payment_info 
             ];
 
-            // ✅ Existing PDF Update
             $pdf = PDF::loadView('fee-receipt.pdf', compact('data'))->setPaper('A4', 'portrait');
             $pdfPath = 'receipts/' . $data['student_id'] . '_receipt.pdf';
             Storage::put('public/' . $pdfPath, $pdf->output());
@@ -135,6 +167,7 @@ class FeesReceiptController extends Controller
                 'amount' => $data['amount'],
                 'payment_date' => $data['payment_date'],
                 'payment_mode' => $data['payment_mode'],
+                'payment_info' => $data['payment_info'],
                 'pdf_path' => $pdfPath
             ]);
 
@@ -143,7 +176,6 @@ class FeesReceiptController extends Controller
             return back()->with('error', $th->getMessage());
         }
     }
-
     public function downloadReceipt($id)
     {
         $receipt = FeesReceipt::findOrFail($id);
@@ -152,9 +184,12 @@ class FeesReceiptController extends Controller
             return back()->with('error', 'Receipt PDF not found.');
         }
 
-        return response()->download(storage_path("app/public/" . $receipt->pdf_path));
-    }
+        return response()->file(storage_path("app/public/" . $receipt->pdf_path), [
+            'Content-Type' => 'application/pdf',
+        ]);
 
+        // return response()->download(storage_path("app/public/" . $receipt->pdf_path));
+    }
     public function deleteReceipt($id)
     {
         try {
@@ -171,11 +206,9 @@ class FeesReceiptController extends Controller
             return back()->with('error', 'Error deleting receipt: ' . $e->getMessage());
         }
     }
-
-
-    public function showReceipt(Request $request)
+    public function showReceipt(Request $request,$id)
     {
-        $receipt = FeesReceipt::findOrFail(2);
+        $receipt = FeesReceipt::findOrFail($id);
 
         $totalFees = array_sum(array_column($receipt->fees_details, 'amount'));
 
@@ -199,6 +232,13 @@ class FeesReceiptController extends Controller
 
         // **OPTION 2: Force Download PDF**
         // return $pdf->download('fee_receipt.pdf');
+    }
+    public function getStudentFees($id)
+    {
+        $student = FeesReceipt::where('student_id',   $id)->first();
+        return response()->json([
+            'remaining_fees' => $student ? (int)$student->remaining_fees : 0
+        ]);
     }
 }
 

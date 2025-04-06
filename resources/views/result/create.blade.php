@@ -2,15 +2,14 @@
 
 @push('style')
     <style>
-        /* Card Header Styling */
         .card-header {
             background-color: #f1f2f3;
             color: rgb(15, 15, 15);
             padding: 15px;
             font-size: 18px;
+            font-weight: bold;
         }
 
-        /* Breadcrumb Styling */
         .breadcrumb-container {
             display: flex;
             align-items: center;
@@ -38,7 +37,6 @@
             color: #007bff;
         }
 
-        /* Form Styling */
         .form-container {
             max-width: 700px;
             margin: 0 auto;
@@ -53,7 +51,17 @@
             padding: 10px;
         }
 
-        /* Button Styling */
+        .section-header {
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #e3f2fd;
+            padding: 10px;
+            border-left: 5px solid #2196f3;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            color: #0d47a1;
+        }
+
         .btn {
             border-radius: 8px;
             padding: 10px 20px;
@@ -94,14 +102,16 @@
                     </div>
                 </div>
 
-                <!-- ✅ Centered Form -->
+                <!-- ✅ Form -->
                 <div class="card-body">
                     <div class="form-container">
-                        <h4 class="text-center mb-4">📊 Add Student Result</h4>
+                        <h4 class="text-center mb-4"> Add Student Result</h4>
                         <form action="{{ route('store-result') }}" method="POST">
                             @csrf
-                            
+
                             <!-- Student Selection -->
+                            <div class="section-header">Student Information</div>
+
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="student_id" class="form-label">Student Name</label>
@@ -122,47 +132,47 @@
                                 </div>
                             </div>
 
-                            <!-- Term 1 & Term 2 Details (2-Column Layout) -->
+                            <!-- ✅ Term 1 Section -->
+                            <div class="section-header">Term 1 Details</div>
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="term1_total_marks" class="form-label">Term 1 Total Marks</label>
+                                <div class="col-md-4">
+                                    <label for="term1_total_marks" class="form-label">Total Marks</label>
                                     <input type="number" class="form-control" id="term1_total_marks" name="term1_total_marks" required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="term1_percentage" class="form-label">Term 1 Percentage</label>
+                                <div class="col-md-4">
+                                    <label for="term1_percentage" class="form-label">Percentage</label>
                                     <input type="text" class="form-control" id="term1_percentage" name="term1_percentage" required>
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="term1_grade" class="form-label">Term 1 Grade</label>
+                                <div class="col-md-4">
+                                    <label for="term1_grade" class="form-label">Grade</label>
                                     <input type="text" class="form-control" id="term1_grade" name="term1_grade" required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="term2_total_marks" class="form-label">Term 2 Total Marks</label>
-                                    <input type="number" class="form-control" id="term2_total_marks" name="term2_total_marks" required>
-                                </div>
                             </div>
 
+                            <!-- ✅ Term 2 Section -->
+                            <div class="section-header">Term 2 Details</div>
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="term2_percentage" class="form-label">Term 2 Percentage</label>
+                                <div class="col-md-4">
+                                    <label for="term2_total_marks" class="form-label">Total Marks</label>
+                                    <input type="number" class="form-control" id="term2_total_marks" name="term2_total_marks" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="term2_percentage" class="form-label">Percentage</label>
                                     <input type="text" class="form-control" id="term2_percentage" name="term2_percentage" required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="term2_grade" class="form-label">Term 2 Grade</label>
+                                <div class="col-md-4">
+                                    <label for="term2_grade" class="form-label">Grade</label>
                                     <input type="text" class="form-control" id="term2_grade" name="term2_grade" required>
                                 </div>
                             </div>
 
                             <!-- ✅ Submit & Cancel Buttons -->
-                            <div class="text-center">
+                            <div class="text-center mt-4">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                                 <a href="{{ route('result') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
-                    </div> <!-- End of Form Container -->
+                    </div>
                 </div> <!-- End of Card Body -->
             </div> <!-- End of Card -->
         </div>

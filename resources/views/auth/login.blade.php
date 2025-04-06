@@ -18,7 +18,7 @@
                             @csrf
                             <div class="form-group">
                                 <input type="email"
-                                    class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
                                     id="exampleInputEmail1" placeholder="Username" name="email"
                                     value="{{ old('email') }}">
                                 @error('email')
@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="password"
-                                    class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                    class="form-control form-control-sm @error('password') is-invalid @enderror"
                                     name="password" id="exampleInputPassword1" placeholder="Password">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">

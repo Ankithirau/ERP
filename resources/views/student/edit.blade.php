@@ -116,25 +116,31 @@
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="section" class="form-label">Section</label>
-                                        <input type="text" class="form-control" name="section" 
-                                               value="{{ $student->section }}" required>
-                                    </div>
-                                    <div class="col-md-6">
                                         <label for="class" class="form-label">Class</label>
                                         <select class="form-control fw-bold" name="class" required>
                                             <option value="">Select Class</option>
-                                            <option value="6" {{ $student->class == '6' ? 'selected' : '' }}>Class 6</option>
-                                            <option value="7" {{ $student->class == '7' ? 'selected' : '' }}>Class 7</option>
-                                            <option value="8" {{ $student->class == '8' ? 'selected' : '' }}>Class 8</option>
-                                            <option value="9" {{ $student->class == '9' ? 'selected' : '' }}>Class 9</option>
-                                            <option value="10" {{ $student->class == '10' ? 'selected' : '' }}>Class 10</option>
+                                            @foreach ($classes as $key => $value)
+                                                <option value="{{ $key }}" {{ $student->class == $key ? 'selected' : '' }}>
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="section" class="form-label">Section</label>
+                                        <select class="form-control fw-bold" name="section" id="section" required>
+                                            <option value="">Select Section</option>
+                                            @foreach ($sections as $section)
+                                                <option value="{{ $section }}" {{ $student->section == $section ? 'selected' : '' }}>
+                                                    {{ $section }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label for="admission_year" class="form-label">Admission Year</label>
                                         <input type="text" class="form-control" name="admission_year" 
                                                value="{{ $student->admission_year }}" required>

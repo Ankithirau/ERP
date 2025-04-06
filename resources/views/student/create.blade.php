@@ -128,16 +128,19 @@
                                         <label for="className" class="form-label">Class</label>
                                         <select class="form-control fw-bold pb-3" id="className" name="class" required>
                                             <option value="">Select Class</option>
-                                            <option value="6">Class 6</option>
-                                            <option value="7">Class 7</option>
-                                            <option value="8">Class 8</option>
-                                            <option value="9">Class 9</option>
-                                            <option value="10">Class 10</option>
+                                            @foreach ($classes as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="section" class="form-label">Section</label>
-                                        <input type="text" class="form-control" id="section" name="section" required>
+                                        <select class="form-control fw-bold pb-3" id="section" name="section" required>
+                                            <option value="">Select Section</option>
+                                            @foreach ($sections as $section)
+                                                <option value="{{ $section }}">{{ $section }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 

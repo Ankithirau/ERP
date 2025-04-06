@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\Validator;
 
-class studentController extends Controller
+class StudentController extends Controller
 {
 
     public function student()
@@ -17,8 +17,13 @@ class studentController extends Controller
 
     public function create()
     {
-        $student = Student::paginate(10);
-        return view("student.create");
+        $classes = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $classes[$i] = "Class $i";
+        }
+    
+        $sections = ['A', 'B', 'C', 'D'];
+        return view("student.create",compact('classes', 'sections'));
     }
 
     public function store(Request $request)
@@ -55,7 +60,14 @@ class studentController extends Controller
     {
         $student = Student::findOrFail($id);
 
-        return view('student.edit', compact('student'));
+        $classes = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $classes[$i] = "Class $i";
+        }
+    
+        $sections = ['A', 'B', 'C', 'D'];
+
+        return view('student.edit', compact('student','classes','sections'));
     }
 
     public function update(Request $request, $student_id)

@@ -76,34 +76,23 @@
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Student ID</label>
-                                        <input type="text" class="form-control" value="{{ $student->student_id }}" readonly>
-                                    </div>
-                                    <div class="col-md-6">
                                         <label class="form-label">Admission No.</label>
                                         <input type="text" class="form-control" value="{{ $student->Admission_no }}" readonly>
                                     </div>
-                                </div>
-
-                                <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Student Name</label>
                                         <input type="text" class="form-control" value="{{ $student->name }}" readonly>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Mother's Name</label>
-                                        <input type="text" class="form-control" value="{{ $student->mother_name }}" readonly>
-                                    </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Date of Birth</label>
-                                        <input type="date" class="form-control" value="{{ $student->dob }}" readonly>
+                                        <label class="form-label">Mother's Name</label>
+                                        <input type="text" class="form-control" value="{{ $student->mother_name }}" readonly>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Section</label>
-                                        <input type="text" class="form-control" value="{{ $student->section }}" readonly>
+                                        <label class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-control" value="{{ $student->dob }}" readonly>
                                     </div>
                                 </div>
 
@@ -113,6 +102,13 @@
                                         <input type="text" class="form-control" value="{{ $student->class }}" readonly>
                                     </div>
                                     <div class="col-md-6">
+                                        <label class="form-label">Section</label>
+                                        <input type="text" class="form-control" value="{{ $student->section }}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
                                         <label class="form-label">Admission Year</label>
                                         <input type="text" class="form-control" value="{{ $student->admission_year }}" readonly>
                                     </div>

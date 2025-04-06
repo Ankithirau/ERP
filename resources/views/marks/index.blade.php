@@ -78,13 +78,47 @@
                             </a>
                         </div>
 
-                        {{-- <h4 class="card-title text-primary">📚 Marks List</h4> --}}
+                        {{-- Minimalist Filter --}}
+                        <form method="GET" action="{{ route('mark') }}" class="mb-3">
+                            <div class="row g-2 align-items-end">
+                                <div class="col-md-2">
+                                    <label for="class" class="form-label mb-1 small">Class</label>
+                                    <select name="class" id="class" class="form-select form-select-sm">
+                                        <option value="">All</option>
+                                        @foreach($classes as $value => $label)
+                                            <option value="{{ $value }}" {{ request('class') == $label ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        
+                                <div class="col-md-2">
+                                    <label for="student_name" class="form-label mb-1 small">Student</label>
+                                    <select name="student_name" id="student_name" class="form-select form-select-sm">
+                                        <option value="">All</option>
+                                        @foreach($students as $student)
+                                            <option value="{{ $student->name }}" {{ request('student_name') == $student->name ? 'selected' : '' }}>
+                                                {{ $student->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        
+                                <div class="col-md-2 d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary btn-sm w-100">Filter</button>
+                                    <a href="{{ route('mark') }}" class="btn btn-secondary btn-sm w-100">Reset</a>
+                                </div>
+                            </div>
+                        </form>
 
+                        {{-- <h4 class="card-title text-primary">📚 Marks List</h4> --}}
                         <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                             <table class="table table-bordered text-center align-middle">
                                 <thead class="table-primary text-dark">
                                     <tr>
-                                        <th rowspan="2">Mark ID</th>
+                                        <th rowspan="2">#</th>
+                                        <th rowspan="2">Actions</th>
                                         <th rowspan="2">Student Name</th>
                                         <th rowspan="2">Academic Year</th>
                                         <th rowspan="2">Roll No</th>
@@ -93,7 +127,6 @@
                                         <th colspan="9" class="bg-success text-white">Term 2 Results</th>
                                         <th rowspan="2">Term 1 Total</th>
                                         <th rowspan="2">Term 2 Total</th>
-                                        <th rowspan="2">Actions</th>
                                     </tr>
                                     <tr>
                                         @foreach(['English', 'Hindi', 'Marathi', 'Mathematics', 'Science', 'Social', 'Computer', 'EVS', 'GK'] as $subject)
@@ -107,38 +140,32 @@
                                 <tbody>
                                     @foreach($marks as $mark)
                                         <tr>
-                                            <td>{{ $mark->mark_id }}</td>
+                                            <td>{{ ++$loop->index }}</td>
+                                            <td class="text-nowrap">
+                                                <a href="{{ route('edit-marks',$mark->student_id) }}" class="text-primary me-2 text-decoration-none">
+                                                    <i class="mdi mdi-pencil fs-5"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" class="text-success me-2 text-decoration-none d-none">
+                                                    <i class="mdi mdi-eye fs-5"></i>
+                                                </a>
+                                                <a href="javascript:void(0);"
+                                                    onclick="confirmDelete('{{ route('delete-marks', $mark->mark_id) }}')"
+                                                    title="Delete" class="text-danger text-decoration-none">
+                                                    <i class="mdi mdi-trash-can fs-5"></i>
+                                                </a>
+                                            </td>
                                             <td>{{ $mark->student_name }}</td>
                                             <td>{{ $mark->academic_year }}</td>
                                             <td>{{ $mark->rollno }}</td>
                                             <td>{{ $mark->class }}</td>
-
-                                            <!-- Term 1 Marks -->
                                             @for($i = 1; $i <= 9; $i++)
                                                 <td>{{ $mark->{'term1_subject_' . $i . '_total'} ?? rand(70, 95) }}</td>
                                             @endfor
-
-                                            <!-- Term 2 Marks -->
                                             @for($i = 1; $i <= 9; $i++)
                                                 <td>{{ $mark->{'term2_subject_' . $i . '_total'} ?? rand(70, 95) }}</td>
                                             @endfor
-
                                             <td><strong>{{ $mark->term1_total ?? rand(650, 700) }}</strong></td>
                                             <td><strong>{{ $mark->term2_total ?? rand(650, 700) }}</strong></td>
-
-                                            <td class="text-nowrap">
-                                                <a href="#" title="Edit" class="text-primary me-2">
-                                                    <i class="mdi mdi-pencil fs-5"></i>
-                                                </a>
-                                                <a href="#" title="View" class="text-success me-2">
-                                                    <i class="mdi mdi-eye fs-5"></i>
-                                                </a>
-                                                <a href="javascript:void(0);"
-                                                    onclick="confirmDelete('{{ route('delete-student', $mark->mark_id) }}')"
-                                                    title="Delete" class="text-danger">
-                                                    <i class="mdi mdi-trash-can fs-5"></i>
-                                                </a>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

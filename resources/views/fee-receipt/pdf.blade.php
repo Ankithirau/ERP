@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Fee Receipt</title>
 </head>
-<body style="font-family: Arial, sans-serif; font-size: 14px; margin: 0; padding: 10px 0px;"> <!-- ⬅ Margin Left बढ़ाया -->
+<body style="font-family: Arial, sans-serif; font-size: 14px; margin: 0; padding: 10px 0px;">
 
     <div style="width: 700px; margin: auto; padding: 20px; border: 1px solid #ddd;">
-        <!-- Header Section with Centered & Smaller Logo -->
+        <!-- Header Section -->
         <div style="display: flex; justify-content: center; align-items: center; padding-bottom: 10px; border-bottom: 2px solid orange;">
             <div style="text-align: center;">
                 <img src="http://16.171.242.61/sdrecord/img/springdalelogo.png" alt="School Logo"
@@ -24,15 +24,22 @@
         <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; border: 1px solid #ccc;">
             <tr>
                 <td style="padding: 6px; border: 1px solid #ccc;"><strong>Rec. No:</strong> {{ $data['receipt_no'] }}</td>
-                <td style="padding: 6px; border: 1px solid #ccc; text-align: right;"><strong>Date:</strong> {{ $data['payment_date'] }}</td>
+                <td style="padding: 6px; border: 1px solid #ccc; text-align: left;"><strong>Date:</strong> {{ $data['payment_date'] }}</td>
             </tr>
             <tr>
                 <td style="padding: 6px; border: 1px solid #ccc;"><strong>Name:</strong> {{ $data['student_name'] }}</td>
-                <td style="padding: 6px; border: 1px solid #ccc; text-align: right;"><strong>Student Id:</strong> {{ $data['student_id'] }}</td>
+                <td style="padding: 6px; border: 1px solid #ccc; text-align: left;"><strong>Student Id:</strong> {{ $data['student_id'] }}</td>
             </tr>
             <tr>
                 <td style="padding: 6px; border: 1px solid #ccc;"><strong>Class:</strong> {{ $data['class'] }}</td>
-                <td style="padding: 6px; border: 1px solid #ccc; text-align: right;"><strong>Section:</strong> {{ $data['section'] }}</td>
+                <td style="padding: 6px; border: 1px solid #ccc; text-align: left;"><strong>Section:</strong> {{ $data['section'] }}</td>
+            </tr>
+            <!-- Payment Details -->
+            <tr>
+                <td style="padding: 6px; border: 1px solid #ccc;"><strong>Payment Mode:</strong> {{ $data['payment_mode'] }}</td>
+                <td style="padding: 6px; border: 1px solid #ccc; text-align: left;">
+                    <strong>Payment Info:</strong> {{ $data['payment_info'] ?? 'N/A' }}
+                </td>
             </tr>
         </table>
 

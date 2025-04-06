@@ -14,4 +14,8 @@ class Result extends Model
     protected $guarded = [];
 
     protected $primaryKey = 'result_id';
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
 }

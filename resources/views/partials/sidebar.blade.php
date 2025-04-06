@@ -40,16 +40,29 @@
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="{{ route("mark") }}">Marks</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route("co-scholastic") }}">Co-Scholastic Areas</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route("excellence") }}">Co-Scholastic Areas</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-result" aria-expanded="false" aria-controls="ui-result">
+        <i class="mdi mdi-file-document-box-check menu-icon"></i>
+        <span class="menu-title">Manage Result</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="ui-result">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{ route("result") }}">Add Result</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route("view-result") }}">View Results</a></li>
+        </ul>
+      </div>
+    </li>
+    {{-- <li class="nav-item">
       <a class="nav-link" href="{{ route('result') }}">
         <i class="mdi mdi-file-chart menu-icon"></i>
         <span class="menu-title">Results</span>
       </a>
-    </li>
+    </li> --}}
     <!-- <li class="nav-item">
       <a class="nav-link" href="pages/tables/basic-table.html">
         <i class="mdi mdi-grid-large menu-icon"></i>

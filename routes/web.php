@@ -7,7 +7,8 @@ use App\Http\Controllers\{
     MarksController,
     ResultController,
     UserController,
-    FeesReceiptController
+    FeesReceiptController,
+    ExcellenceController
 };
 
 /*
@@ -27,7 +28,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','password.confirm'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
@@ -50,16 +51,30 @@ Route::middleware(['auth'])->group(function () {
             Route::get('marks', 'index')->name('mark');
             Route::get('marks/add', 'create')->name('addmarks');
             Route::post('marks/store', 'store')->name('store-marks');
+            Route::get('marks/edit/{id}', 'edit')->name('edit-marks');
+            Route::put('marks/update/{id}', 'update')->name('update-marks');
+            Route::get('marks/delete/{id}', 'destroy')->name('delete-marks');
             Route::get('co-scholastic', 'coscholastic')->name('co-scholastic');
+        });
+
+        Route::controller(ExcellenceController::class)->group(function () {
+            Route::get('excellence', 'index')->name('excellence');
+            Route::get('excellence/add', 'create')->name('create.excellence');
+            Route::post('excellence/store', 'store')->name('store.excellence');
+            Route::get('excellence/edit/{id}', 'edit')->name('edit.excellence');
+            Route::put('excellence/update/{id}', 'update')->name('update.excellence');
+            Route::get('excellence/delete/{id}', 'destroy')->name('destroy.excellence');
         });
 
         Route::controller(ResultController::class)->group(function () {
             Route::get('results', 'index')->name('result');
+            Route::get('prints-results', 'view')->name('view-result');
+            Route::post('generate-results', 'generateResult')->name('generate-result');
             Route::get('results/create', 'create')->name('create-result');
             Route::post('results/store', 'store')->name('store-result');
             Route::get('results/edit/{id}', 'edit')->name('edit-result');
             Route::put('results/update/{id}', 'update')->name('update-result');
-            Route::get('results/view/{id}', 'show')->name('view-result');
+            Route::get('results/view/{id}', 'show')->name('show-result');
             Route::get('results/delete/{id}', 'destroy')->name('delete-result');
         });
 
@@ -83,7 +98,8 @@ Route::middleware(['auth'])->group(function () {
             Route::put('receipts/update/{id}', 'updateReceipt')->name('receipts.update');
             Route::get('receipts/download/{id}', 'downloadReceipt')->name('download-receipt');
             Route::get('receipts/delete/{id}', 'deleteReceipt')->name('delete-receipt');
-            Route::get('receipts/show', 'showReceipt')->name('show-receipt');
+            Route::get('receipts/show/{id}', 'showReceipt')->name('show-receipt');
+            Route::get('/student-fees/{id}', 'getStudentFees')->name('student.fees');
         });
     });
 });

@@ -20,4 +20,13 @@ class Student extends Model
     {
         return $this->hasMany(Marks::class, 'student_id', 'student_id');
     }
+    public function results()
+    {
+        return $this->hasMany(Result::class, 'student_id');
+    }
+
+    public function excellence()
+    {
+        return $this->hasMany(Excellence::class, 'student_id');
+    }
 }

@@ -89,13 +89,13 @@
                                     <td class="text-success"><strong>{{ $results->term2_percentage }}%</strong></td>
                                     <td class="fw-bold">{{ $results->term2_grade }}</td>
                                     <td class="text-nowrap">
-                                        <a href="{{ route('edit-result', $results->result_id) }}" title="Edit" class="text-primary me-2">
+                                        <a href="{{ route('edit-result', $results->result_id) }}" title="Edit" class="text-primary me-2 text-decoration-none">
                                             <i class="mdi mdi-pencil fs-6"></i>
                                         </a>
-                                        <a href="{{ route('view-result', $results->result_id) }}" title="View" class="text-success me-2">
+                                        <a href="{{ route('show-result', $results->result_id) }}" title="View" class="text-success me-2 text-decoration-none">
                                             <i class="mdi mdi-eye fs-6"></i>
                                         </a>
-                                        <a href="javascript:void(0);" onclick="confirmDelete('{{ route('delete-result', $results->result_id) }}')" title="Delete" class="text-danger delete-confirm">
+                                        <a href="javascript:void(0);" onclick="confirmDelete('{{ route('delete-result', $results->result_id) }}')" title="Delete" class="text-danger delete-confirm text-decoration-none">
                                             <i class="mdi mdi-trash-can fs-6"></i>
                                         </a>
                                     </td>
